@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,300i,400,900')
+
+// *
+//   border: 1px solid gray
+
+// utils
+=size($w, $h:$w)
+  width: $w
+  height: $h
+
+%flip-card
+  backface-visibility: hidden
+  transform-style: preserve-3d
+  transition: .9s
+  position: absolute
+  top: 0
+  left: 0
+  border-radius: 4px
+
+
+// content
+
+html, body
+  +size(100%)
+  padding: 0
+  margin: 0
+  display: flex
+  
+.game-box
+  +size(auto, auto)
+  margin: auto
+  
+  .title
+    font-family: 'Raleway', sans-serif
+    text-align: center
+    font-size: 40px
+    font-weight: 900
+    text-transform: uppercase
+    color: #60A9E2
+    
+  .playground
+    .card
+      &-box
+        +size(600px,auto)
+        display: flex
+        flex-flow: row wrap
+        margin: 40px auto
+        list-style: none
+      
+      &-item
+        +size(120px,160px)
+        position: relative
+        margin: 10px
+        border: 1px solid transparent
+
+        // &:hover .card-font
+        //   transform: rotateY(180deg)
+        // &:hover .card-back
+        //   transform: rotateY(0deg)
+
+      &-font
+        +size(120px,160px)
+        @extend %flip-card
+        background-color: #e9f0f4
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cg fill='%23202ed9' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M0 0h4v4H0V0zm4 4h4v4H4V4z'/%3E%3C/g%3E%3C/svg%3E")
+        
+      &-back
+        +size(120px,160px)
+        @extend %flip-card
+        background-color: red
+        transform: rotateY(-180deg)
+        
