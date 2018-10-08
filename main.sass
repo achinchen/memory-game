@@ -1,13 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,300i,400,900')
 
-// *
-//   border: 1px solid gray
-
 // utils
-=size($w, $h:$w)
-  width: $w
-  height: $h
-
 %flip-card
   backface-visibility: hidden
   transform-style: preserve-3d
@@ -17,9 +10,17 @@
   left: 0
   border-radius: 4px
 
+=size($w, $h:$w)
+  width: $w
+  height: $h
+
+$colors: ( blue: #60A9E2, green: #AEEE89, pink: #F4ADAE, yellow: #F3E77C)
+
+@each $name, $color in $colors 
+  .bodercolor-#{$name}
+    border: 1px solid darken($color, 5%)
 
 // content
-
 html, body
   +size(100%)
   padding: 0
@@ -36,7 +37,7 @@ html, body
     font-size: 40px
     font-weight: 900
     text-transform: uppercase
-    color: #60A9E2
+    color: #777
     
   .playground
     .card
@@ -53,10 +54,10 @@ html, body
         margin: 10px
         border: 1px solid transparent
 
-        // &:hover .card-font
-        //   transform: rotateY(180deg)
-        // &:hover .card-back
-        //   transform: rotateY(0deg)
+        &:hover .card-font
+          transform: rotateY(180deg)
+        &:hover .card-back
+          transform: rotateY(0deg)
 
       &-font
         +size(120px,160px)
@@ -67,6 +68,9 @@ html, body
       &-back
         +size(120px,160px)
         @extend %flip-card
-        background-color: red
+        background-image: url('/img/diamond-blue.svg')
+        background-size: 45%
+        background-position: 50%
+        background-repeat: no-repeat
         transform: rotateY(-180deg)
         
