@@ -54,7 +54,7 @@ html, body {
 }
 
 .game-box .playground .card-box {
-  width: 600px;
+  width: 800px;
   height: auto;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -68,8 +68,8 @@ html, body {
 }
 
 .game-box .playground .card-item {
-  width: 120px;
-  height: 160px;
+  width: 100px;
+  height: 150px;
   position: relative;
   margin: 10px;
   border: 1px solid transparent;
@@ -86,15 +86,15 @@ html, body {
 }
 
 .game-box .playground .card-font {
-  width: 120px;
-  height: 160px;
+  width: 100px;
+  height: 150px;
   background-color: #e9f0f4;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cg fill='%23202ed9' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M0 0h4v4H0V0zm4 4h4v4H4V4z'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 .game-box .playground .card-back {
-  width: 120px;
-  height: 160px;
+  width: 100px;
+  height: 150px;
   background-image: url("/img/diamond-blue.svg");
   background-size: 45%;
   background-position: 50%;

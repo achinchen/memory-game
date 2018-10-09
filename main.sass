@@ -10,6 +10,9 @@
   left: 0
   border-radius: 4px
 
+%card-size
+  +size(100px,150px)
+
 =size($w, $h:$w)
   width: $w
   height: $h
@@ -42,14 +45,14 @@ html, body
   .playground
     .card
       &-box
-        +size(600px,auto)
+        +size(800px,auto)
         display: flex
         flex-flow: row wrap
         margin: 40px auto
         list-style: none
       
       &-item
-        +size(120px,160px)
+        @extend %card-size
         position: relative
         margin: 10px
         border: 1px solid transparent
@@ -60,14 +63,14 @@ html, body
           transform: rotateY(0deg)
 
       &-font
-        +size(120px,160px)
         @extend %flip-card
+        @extend %card-size
         background-color: #e9f0f4
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cg fill='%23202ed9' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M0 0h4v4H0V0zm4 4h4v4H4V4z'/%3E%3C/g%3E%3C/svg%3E")
         
       &-back
-        +size(120px,160px)
         @extend %flip-card
+        @extend %card-size
         background-image: url('/img/diamond-blue.svg')
         background-size: 45%
         background-position: 50%
