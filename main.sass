@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,300i,400,900')
 
 // utils
+=size($w, $h:$w)
+  width: $w
+  height: $h
+
+$colors: ( blue: #60A9E2, green: #AEEE89, pink: #F4ADAE, yellow: #F3E77C)
+
+@each $name, $color in $colors 
+  .bodercolor-#{$name}
+    border: 1px solid darken($color, 5%)
+
 %flip-card
   backface-visibility: hidden
   transform-style: preserve-3d
@@ -13,17 +23,12 @@
 %card-size
   +size(100px,150px)
 
-=size($w, $h:$w)
-  width: $w
-  height: $h
-
-$colors: ( blue: #60A9E2, green: #AEEE89, pink: #F4ADAE, yellow: #F3E77C)
-
-@each $name, $color in $colors 
-  .bodercolor-#{$name}
-    border: 1px solid darken($color, 5%)
-
 // content
+
+ul
+  list-style: none
+  padding: 0
+
 html, body
   +size(100%)
   padding: 0
@@ -45,12 +50,12 @@ html, body
   .playground
     .card
       &-box
-        +size(800px,auto)
+        +size(520px,auto)
         display: flex
         flex-flow: row wrap
+        justify-content: center
         margin: 40px auto
-        list-style: none
-      
+
       &-item
         @extend %card-size
         position: relative
