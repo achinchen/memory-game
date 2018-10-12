@@ -1,11 +1,15 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:300,300i,400,900')
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,300i,400,900")
 
 // utils
 =size($w, $h:$w)
   width: $w
   height: $h
 
-$colors: ( blue: #60A9E2, green: #AEEE89, pink: #F4ADAE, yellow: #F3E77C)
+$background-color: #f7f7f7
+$background-reverse-color: #393e46
+$box-shadow: 2px 2px 15px rgba($background-reverse-color,.5)
+
+$colors: (blue: #60A9E2, green: #AEEE89, pink: #F4ADAE, yellow: #F3E77C)
 
 @each $name, $color in $colors 
   .bodercolor-#{$name}
@@ -19,34 +23,38 @@ $colors: ( blue: #60A9E2, green: #AEEE89, pink: #F4ADAE, yellow: #F3E77C)
   top: 0
   left: 0
   border-radius: 4px
+  box-shadow: $box-shadow
 
 %card-size
   +size(100px,150px)
 
-// content
+// reset 
 
 ul
   list-style: none
   padding: 0
+
+// content
 
 html, body
   +size(100%)
   padding: 0
   margin: 0
   display: flex
+  background-color: $background-color
   
 .game-box
   +size(auto, auto)
   margin: auto
   
   .title
-    font-family: 'Raleway', sans-serif
+    font:
+      family: "Raleway", sans-serif
+      size: 40px
+      weight: 300
+      color: lighten($background-reverse-color,.7)
     text-align: center
-    font-size: 40px
-    font-weight: 900
-    text-transform: uppercase
-    color: #777
-    
+
   .playground
     .card
       &-box
@@ -62,6 +70,9 @@ html, body
         margin: 10px
         border: 1px solid transparent
 
+        &:nth(n+12)
+          display: none
+
         &:hover .card-font
           transform: rotateY(180deg)
         &:hover .card-back
@@ -70,15 +81,16 @@ html, body
       &-font
         @extend %flip-card
         @extend %card-size
-        background-color: #e9f0f4
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cg fill='%23202ed9' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M0 0h4v4H0V0zm4 4h4v4H4V4z'/%3E%3C/g%3E%3C/svg%3E")
-        
+        background-image: url("/img/cards-front.png")
+
       &-back
         @extend %flip-card
         @extend %card-size
-        background-image: url('/img/diamond-blue.svg')
-        background-size: 45%
-        background-position: 50%
-        background-repeat: no-repeat
+        background:
+          image: url("/img/cards-back/diamond-blue.svg")
+          color: lighten($background-color,.2)
+          size: 45%
+          position: 50%
+          repeat: no-repeat
         transform: rotateY(-180deg)
         

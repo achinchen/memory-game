@@ -20,14 +20,37 @@ class Cards {
 class Game {
   constructor() {
     this.cards = new Cards()
-    this.allCards = document.querySelectorAll('.card-back')
+    this.shapeList = []
+    this.colorList = []
+    this.level = 0
   }
-  get levels() {
-    return this.getLevels()
+  get isBonus() {
+    return !(this.level < 3)
+  }
+  get tradeOff() {
+    return this.level > 4 ? 'all' : this.level % 2 == 0 ? 'color' : 'shape'
+  }
+  get countOfCards() {
+    return this.isBonus ? 16 : 8
+  }
+
+  startGame() {
+    if (this.level < 6) {
+      this.level += 1
+    } else {
+      this.finishGame()
+    }
+  }
+  getRule() {}
+  finishGame() {
+    console.log('finish Game!')
+  }
+  getSufferArray(count) {
+    let tempArray = [...Array(4).keys()]
+    return tempArray.sort(() => 0.5 - Math.random()).slice(0, count)
   }
   getLevels() {
-    let randomLevels = []
-    
+    return this.getRandomNumber(4)
   }
 }
 

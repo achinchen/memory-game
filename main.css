@@ -26,6 +26,8 @@
   top: 0;
   left: 0;
   border-radius: 4px;
+  -webkit-box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
+          box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
 }
 
 .game-box .playground .card-item, .game-box .playground .card-font, .game-box .playground .card-back {
@@ -46,6 +48,7 @@ html, body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  background-color: #f7f7f7;
 }
 
 .game-box {
@@ -55,12 +58,11 @@ html, body {
 }
 
 .game-box .title {
-  font-family: 'Raleway', sans-serif;
-  text-align: center;
+  font-family: "Raleway", sans-serif;
   font-size: 40px;
-  font-weight: 900;
-  text-transform: uppercase;
-  color: #777;
+  font-weight: 300;
+  font-color: #3b4048;
+  text-align: center;
 }
 
 .game-box .playground .card-box {
@@ -85,6 +87,10 @@ html, body {
   border: 1px solid transparent;
 }
 
+.game-box .playground .card-item:nth(n+12) {
+  display: none;
+}
+
 .game-box .playground .card-item:hover .card-font {
   -webkit-transform: rotateY(180deg);
           transform: rotateY(180deg);
@@ -96,12 +102,12 @@ html, body {
 }
 
 .game-box .playground .card-font {
-  background-color: #e9f0f4;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cg fill='%23202ed9' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M0 0h4v4H0V0zm4 4h4v4H4V4z'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("/img/cards-front.png");
 }
 
 .game-box .playground .card-back {
-  background-image: url("/img/diamond-blue.svg");
+  background-image: url("/img/cards-back/diamond-blue.svg");
+  background-color: #f8f8f8;
   background-size: 45%;
   background-position: 50%;
   background-repeat: no-repeat;
