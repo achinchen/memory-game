@@ -61,7 +61,7 @@ html, body {
   font-family: "Raleway", sans-serif;
   font-size: 40px;
   font-weight: 300;
-  font-color: #3b4048;
+  font-color: #3a3f47;
   text-align: center;
 }
 
@@ -87,10 +87,6 @@ html, body {
   border: 1px solid transparent;
 }
 
-.game-box .playground .card-item:nth(n+12) {
-  display: none;
-}
-
 .game-box .playground .card-item:hover .card-font {
   -webkit-transform: rotateY(180deg);
           transform: rotateY(180deg);
@@ -113,4 +109,12 @@ html, body {
   background-repeat: no-repeat;
   -webkit-transform: rotateY(-180deg);
           transform: rotateY(-180deg);
+}
+
+.disappear {
+  display: none;
+}
+
+.wider-box {
+  min-width: 800px;
 }

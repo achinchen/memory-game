@@ -52,7 +52,7 @@ html, body
       family: "Raleway", sans-serif
       size: 40px
       weight: 300
-      color: lighten($background-reverse-color,.7)
+      color: lighten($background-reverse-color,.5)
     text-align: center
 
   .playground
@@ -69,9 +69,6 @@ html, body
         position: relative
         margin: 10px
         border: 1px solid transparent
-
-        &:nth(n+12)
-          display: none
 
         &:hover .card-font
           transform: rotateY(180deg)
@@ -93,4 +90,9 @@ html, body
           position: 50%
           repeat: no-repeat
         transform: rotateY(-180deg)
-        
+
+.disappear
+  display: none
+
+.wider-box
+  min-width: 800px
