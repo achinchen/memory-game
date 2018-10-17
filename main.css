@@ -1,18 +1,18 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,300i,400,900");
-.bodercolor-blue {
-  border: 1px solid #4a9dde;
+.border-color-blue {
+  border: 1px solid #94c5eb;
 }
 
-.bodercolor-green {
-  border: 1px solid #9feb73;
+.border-color-green {
+  border: 1px solid #d3f6be;
 }
 
-.bodercolor-pink {
-  border: 1px solid #f19798;
+.border-color-pink {
+  border: 1px solid #fbe3e3;
 }
 
-.bodercolor-yellow {
-  border: 1px solid #f1e365;
+.border-color-yellow {
+  border: 1px solid #f8f1b4;
 }
 
 .game-box .playground .card-font, .game-box .playground .card-back {
@@ -61,7 +61,7 @@ html, body {
   font-family: "Raleway", sans-serif;
   font-size: 40px;
   font-weight: 300;
-  font-color: #3a3f47;
+  color: #3a3f47;
   text-align: center;
 }
 
@@ -87,22 +87,11 @@ html, body {
   border: 1px solid transparent;
 }
 
-.game-box .playground .card-item:hover .card-font {
-  -webkit-transform: rotateY(180deg);
-          transform: rotateY(180deg);
-}
-
-.game-box .playground .card-item:hover .card-back {
-  -webkit-transform: rotateY(0deg);
-          transform: rotateY(0deg);
-}
-
 .game-box .playground .card-font {
   background-image: url("/img/cards-front.png");
 }
 
 .game-box .playground .card-back {
-  background-image: url("/img/cards-back/diamond-blue.svg");
   background-color: #f8f8f8;
   background-size: 45%;
   background-position: 50%;
@@ -111,10 +100,31 @@ html, body {
           transform: rotateY(-180deg);
 }
 
-.disappear {
-  display: none;
+.game-box .playground .card-item.selected .card-font {
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
 }
 
-.wider-box {
-  min-width: 800px;
+.game-box .playground .card-item.selected .card-back {
+  -webkit-transform: rotateY(0deg);
+          transform: rotateY(0deg);
+}
+
+.game-box .activated-btn {
+  width: 100px;
+  height: auto;
+  padding: 3px 10px;
+  margin: auto;
+  font-size: 15px;
+  font-family: "Raleway", sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 2px;
+  border-radius: 20px;
+  border: 1px solid #67707e;
+  cursor: pointer;
+}
+
+.disappear {
+  display: none;
 }
