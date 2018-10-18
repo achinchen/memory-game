@@ -1,16 +1,13 @@
 // (() => {
-class Cards {
-  constructor() {
-    this.colors = ['blue', 'green', 'pink', 'yellow']
-    this.shapes = ['diamond', 'oval', 'rectangle', 'triangle']
-  }
-}
-
 class Game {
   constructor() {
-    this.cards = new Cards()
+    this.cards = {
+      colors: [ 'blue', 'green', 'pink', 'yellow' ],
+      shapes: [ 'diamond', 'oval', 'rectangle', 'triangle' ]
+    }
     this.level = 0
     this.answerCardList = []
+    this.colorListOfAnswerCardList = []
     this.levelSetting = [
       { shape: 2, color: 1, pairs: 4, bonus: false, tradeOff: null },
       { shape: 1, color: 2, pairs: 4, bonus: false, tradeOff: null },
@@ -26,6 +23,12 @@ class Game {
   get isBonus() {
     return !(this.level < 3)
   }
+  get isBeforeVerification() {
+    return this.getSelectedDOMListOfCard().length % 2 == 0
+  }
+  getSelectedDOMListOfCard() {
+    return document.querySelectorAll('.selected')
+  }
   setActivatedButton() {
     const button = document.querySelector('.activated-btn')
     button.addEventListener('click', () => {
@@ -34,16 +37,41 @@ class Game {
     })
   }
   setCardsEventListener() {
-    this.DOMListOfCard.forEach(card => {
+    let indexOfSelectedCards = []
+    this.DOMListOfCard.forEach((card, index) => {
       card.addEventListener('click', () => {
-        card.classList.toggle('selected')
+        window.requestAnimationFrame(() => {
+          card.classList.toggle('selected')
+          // setTimeout(() => card.classList.toggle('selected'), 1000)
+        })
       })
     })
+  }
+  setGameOfRule(index) {
+   
+  }
+  closeCardsEventListener() {
+    this.DOMListOfCard.forEach(card => {
+      card.removeEventListener('click', () => card.classList.remove('selected'))
+    })
+  }
+  displayAnswer() {
+    this.DOMListOfCard.forEach(card => {
+      window.requestAnimationFrame(() => {
+        card.classList.toggle('selected')
+        setTimeout(() => card.classList.toggle('selected'), 1000)
+        setTimeout(() => this.setCardsEventListener(), 1000)
+      }, 1000 / 16)
+    })
+  }
+  displayLevel() {
+    document.querySelector('.level').innerText = `level ${this.level + 1}`
   }
   startGame() {
     if (this.level < 6) {
       this.setLevelOfAnswer()
-      this.setCardsEventListener()
+      this.displayAnswer()
+      this.displayLevel()
       this.level += 1
       if (this.level == 2) this.toggleClassOfLastFourCards()
     } else {
@@ -57,6 +85,13 @@ class Game {
     let lastFourCards = document.querySelectorAll('.switch')
     lastFourCards.forEach(card => card.classList.toggle('disappear'))
   }
+  setBingoShinForCorrectPairs() {
+    this.DOMListOfCard.forEach((card, index) => {
+      if (card.classList.value.indexOf('disappear') == -1) {
+        card.children[1].classList.add(`bingo-shin-${index}`)
+      }
+    })
+  }
   setLevelOfAnswer() {
     const settingData = this.levelSetting[this.level]
     const cardGroup = this.setCardGroup(settingData)
@@ -65,13 +100,16 @@ class Game {
     this.setAnswerCardListWhichBehindTheCards()
   }
   setAnswerCardListWhichBehindTheCards() {
-    this.DOMListOfCard.forEach((card, index)=> {
+    this.DOMListOfCard.forEach((card, index) => {
       if (card.classList.value.indexOf('disappear') == -1) {
         const backgroundImage = this.answerCardList[index]
         card.children[1].style.backgroundImage = `url(/img/cards-back/${backgroundImage})`
         const borderColor = backgroundImage.slice(
           backgroundImage.indexOf('-') + 1, backgroundImage.indexOf('.svg'))
         card.children[1].classList.add(`border-color-${borderColor}`)
+        this.colorListOfAnswerCardList[index] = borderColor
+        // card.children[0].classList.add(`bingo-shin-${borderColor}`)
+        // card.children[1].classList.add(`bingo-shin-${borderColor}`)
       }
     })
   }
