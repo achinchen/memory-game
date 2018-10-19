@@ -8,11 +8,11 @@
   <link rel="stylesheet" type="text/css" media="screen" href="./dist/style/main.min.css" />
 </head>
 <body>
-  <div class="game-box">
+  <div id="app" class="game-box">
     <div class="info-box">
       <div class="title">Memory Game</div>
-      <div class="level">level 0</div>
-      <div class="score">00</div>
+      <div class="level">level {{level}}</div>
+      <div class="score">score {{score}}</div>
     </div>
     <div class="playground">
       <ul class="card-box">
@@ -69,5 +69,188 @@
     <div class="activated-btn">Start</div>
   </div>
 </body>
-<script src="main.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js'></script>
+<script>
+new Vue({
+  el: '#app',
+  data() {
+    return {
+      level: '00',
+      score: '00  ',
+    }
+  },
+  computed() {
+
+  },
+  methods() {
+
+  }
+})
+// (() => {
+//   class Game {
+//   constructor() {
+//     this.cards = {
+//       colors: [ 'blue', 'green', 'pink', 'yellow' ],
+//       shapes: [ 'diamond', 'oval', 'rectangle', 'triangle' ]
+//     }
+//     this.level = 0
+//     this.score = 0
+//     this.isStopSetTimeout = false
+//     this.answerCardList = []
+//     this.currentPair = null
+//     this.colorListOfAnswerCardList = []
+//     this.levelSetting = [
+//       { shape: 2, color: 1, pairs: 4, bonus: false, tradeOff: null },
+//       { shape: 1, color: 2, pairs: 4, bonus: false, tradeOff: null },
+//       { shape: 3, color: 2, pairs: 6, bonus: true, tradeOff: 'shape' },
+//       { shape: 2, color: 3, pairs: 6, bonus: true, tradeOff: 'color' },
+//       { shape: 4, color: 4, pairs: 6, bonus: true, tradeOff: 'all' },
+//       { shape: 4, color: 4, pairs: 6, bonus: true, tradeOff: 'all' }
+//     ]
+//   }
+//   get DOMListOfCard() {
+//     return document.querySelectorAll('.card-item')
+//   }
+//   get isBonus() {
+//     return !(this.level < 3)
+//   }
+//   // isBeforeVerification() {
+//   //   return this.getSelectedDOMListOfCard().length % 2 == 0
+//   // }
+//   getSelectedDOMListOfCard() {
+//     return document.querySelectorAll('.selected')
+//   }
+//   setActivatedButton() {
+//     const button = document.querySelector('.activated-btn')
+//     button.addEventListener('click', () => {
+//       this.startGame()
+//       button.innerText = 'stop'
+//     })
+//   }
+//   setCardsEventListener() {
+//     let indexOfSelectedCards = []
+//     document.querySelector('.playground').addEventListener('click', ({path}) => {
+//       const card = path[1]
+//       card.setAttribute('data-situation', 'cannotSelect')
+//       console.log(card.attributes[1].value)
+//       card.classList.toggle('selected')
+//       let setTimeoutEventID = setTimeout(() => card.classList.toggle('selected'), 1000)
+//       const isBeforeVerification = true
+//       if (isBeforeVerification) clearTimeout(setTimeoutEventID)
+//     })
+//   }
+//   // calculateScore(levelData, result) {
+//   //   if (levelData.bonus) {
+//   //     const tradeOff = levelData.tradeOff
+//   //     tradeOff == 'color' ? console.log(result[0].slice(0, result[0].indexOf('-'))) : console.log(result[0].slice(result[0].indexOf('-') + 1, result[0].indexOf('.svg')))
+//   //   }
+//   //   const tradeOff = levelData.tradeOff
+//   //     tradeOff == 'color' ? console.log(result[0].slice(0, result[0].indexOf('-'))) : console.log(result[0].slice(result[0].indexOf('-') + 1, result[0].indexOf('.svg')))
+//   // }
+//   closeCardsEventListener() {
+//     this.DOMListOfCard.forEach(card => {
+//       card.removeEventListener('click', () => card.classList.remove('selected'))
+//     })
+//   }
+//   displayAnswer() {
+//     this.DOMListOfCard.forEach(card => {
+//       window.requestAnimationFrame(() => {
+//         card.classList.toggle('selected')
+//         setTimeout(() => card.classList.toggle('selected'), 1000)
+//       }, 1000 / 16)
+//     })
+//     setTimeout(() => this.setCardsEventListener(), 1000)
+//   }
+//   displayScore() {
+//     document.querySelector('.score').innerText = `score ${this.score}`
+//   }
+//   displayLevel() {
+//     document.querySelector('.level').innerText = `level ${this.level + 1}`
+//   }
+//   startGame() {
+//     if (this.level < 6) {
+//       this.setAnswerOfLevel()
+//       this.displayAnswer()
+//       this.displayLevel()
+//       this.level += 1
+//       if (this.level == 2) this.toggleClassOfLastFourCards()
+//     } else {
+//       this.finishGame()
+//     }
+//   }
+//   finishGame() {
+//     console.log('finish Game!')
+//   }
+//   toggleClassOfLastFourCards() {
+//     let lastFourCards = document.querySelectorAll('.switch')
+//     lastFourCards.forEach(card => card.classList.toggle('disappear'))
+//   }
+//   setBingoShinForCorrectPairs() {
+//     this.DOMListOfCard.forEach((card, index) => {
+//       if (card.classList.value.indexOf('disappear') == -1) {
+//         card.children[1].classList.add(`bingo-shin-${index}`)
+//       }
+//     })
+//   }
+//   setAnswerOfLevel() {
+//     const settingData = this.levelSetting[this.level]
+//     const cardGroup = this.setCardGroup(settingData)
+//     const answerCardGroup = this.setAnswerCardGroup(cardGroup, settingData)
+//     this.answerCardList = this.setAnswerCardList(answerCardGroup, settingData)
+//     this.setAnswerCardListWhichBehindTheCards()
+//   }
+//   setAnswerCardListWhichBehindTheCards() {
+//     this.DOMListOfCard.forEach((card, index) => {
+//       if (card.classList.value.indexOf('disappear') == -1) {
+//         const backgroundImage = this.answerCardList[index]
+//         card.children[1].style.backgroundImage = `url(/img/cards-back/${backgroundImage})`
+//         const borderColor = backgroundImage.slice(
+//           backgroundImage.indexOf('-') + 1, backgroundImage.indexOf('.svg'))
+//         card.children[1].classList.add(`border-color-${borderColor}`)
+//         this.colorListOfAnswerCardList[index] = borderColor
+//       }
+//     })
+//   }
+//   setCardGroup({ color, shape }) {
+//     const colorList = this.getMaterialList(this.cards.colors, color)
+//     const shapeList = this.getMaterialList(this.cards.shapes, shape)
+//     let tempCardGroup = []
+//     colorList.forEach(colorItem =>
+//       shapeList.forEach(shapeItem =>
+//         tempCardGroup.push(`${shapeItem}-${colorItem}.svg`)
+//       )
+//     )
+//     return tempCardGroup
+//   }
+//   setAnswerCardGroup(cardGroup, { pairs }) {
+//     const sequence = this.getShuffleArray(cardGroup.length, pairs)
+//     return sequence.map(order => cardGroup[order])
+//   }
+//   setAnswerCardList(answerCardGroup, { pairs }) {
+//     const lengthOfCardList = pairs * 2
+//     const tempAnswerCardGroup = this.getFilledArray(lengthOfCardList, answerCardGroup)
+//     const sequence = this.getShuffleArray(lengthOfCardList, lengthOfCardList)
+//     return sequence.map(order=> tempAnswerCardGroup[order])
+//   }
+//   getFilledArray(totalNumber, FilledArray) {
+//     return [...Array(totalNumber)].map((item, index) => FilledArray[index % FilledArray.length])
+//   }
+//   getRandomNumber() {
+//     return Math.floor(Math.random() * 10) % 4
+//   }
+//   getMaterialList(data, count) {
+//     let sequenceArray = this.getShuffleArray(4, count)
+//     return sequenceArray.map(order => data[order])
+//   }
+//   getShuffleArray(totalNumber, count) {
+//     return [...Array(totalNumber).keys()]
+//       .sort(() => 0.5 - Math.random())
+//       .slice(0, count)
+//   }
+// }
+
+// let game = new Game()
+// game.setActivatedButton()
+// // })()
+</script>
 </html>

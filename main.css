@@ -89,8 +89,8 @@ html, body {
   margin-bottom: 10px;
 }
 
-.game-box .info-box .score {
-  font-size: 24px;
+.game-box .info-box .score, .game-box .info-box .level {
+  font-size: 20px;
   font-weight: 300;
 }
 
