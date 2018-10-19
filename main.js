@@ -6,6 +6,8 @@ class Game {
       shapes: [ 'diamond', 'oval', 'rectangle', 'triangle' ]
     }
     this.level = 0
+    this.score = 0
+    this.isStopSetTimeout = false
     this.answerCardList = []
     this.colorListOfAnswerCardList = []
     this.levelSetting = [
@@ -39,11 +41,26 @@ class Game {
   setCardsEventListener() {
     let indexOfSelectedCards = []
     this.DOMListOfCard.forEach((card, index) => {
-      card.addEventListener('click', () => {
-        window.requestAnimationFrame(() => {
-          card.classList.toggle('selected')
-          // setTimeout(() => card.classList.toggle('selected'), 1000)
-        })
+      card.addEventListener('click', (event) => {
+        card.classList.toggle('selected')
+        indexOfSelectedCards.push(index)
+        if(this.isBeforeVerification) {
+          let result = indexOfSelectedCards.map (idx => this.answerCardList[idx])
+          console.log(result)
+          if (result[0] == result [1]) {
+            this.score += 1
+            this.displayScore()
+            card.removeEventListener('click',() => console.log('end first!'))
+            this.isStopSetTimeout = true
+          } else {
+            indexOfSelectedCards = []
+            if (!this.isStopSetTimeout) setTimeout(() => card.classList.toggle('selected'), 1000)
+          }
+        } else {
+          if (!this.isStopSetTimeout) setTimeout(() => card.classList.toggle('selected'), 1000)
+        }
+        clearTimeout()
+        this.isStopSetTimeout = false
       })
     })
   }
@@ -60,16 +77,19 @@ class Game {
       window.requestAnimationFrame(() => {
         card.classList.toggle('selected')
         setTimeout(() => card.classList.toggle('selected'), 1000)
-        setTimeout(() => this.setCardsEventListener(), 1000)
       }, 1000 / 16)
     })
+    setTimeout(() => this.setCardsEventListener(), 1000)
+  }
+  displayScore() {
+    document.querySelector('.score').innerText = `${this.score}`
   }
   displayLevel() {
     document.querySelector('.level').innerText = `level ${this.level + 1}`
   }
   startGame() {
     if (this.level < 6) {
-      this.setLevelOfAnswer()
+      this.setAnswerOfLevel()
       this.displayAnswer()
       this.displayLevel()
       this.level += 1
@@ -92,7 +112,7 @@ class Game {
       }
     })
   }
-  setLevelOfAnswer() {
+  setAnswerOfLevel() {
     const settingData = this.levelSetting[this.level]
     const cardGroup = this.setCardGroup(settingData)
     const answerCardGroup = this.setAnswerCardGroup(cardGroup, settingData)
