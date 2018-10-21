@@ -77,46 +77,84 @@ new Vue({
     return {
       level: '00',
       score: '00  ',
+      cardSetting: {
+        colors: ['blue', 'green', 'pink', 'yellow'],
+        shapes: [ 'diamond', 'oval', 'rectangle', 'triangle' ]
+      },
+      levelSetting: [
+        { shape: 2, color: 1, quantity: 8, bonus: false, tradeOff: null },
+        { shape: 1, color: 2, quantity: 8, bonus: false, tradeOff: null },
+        { shape: 3, color: 2, quantity: 12, bonus: true, tradeOff: 'shape' },
+        { shape: 2, color: 3, quantity: 12, bonus: true, tradeOff: 'color' },
+        { shape: 4, color: 4, quantity: 12, bonus: true, tradeOff: 'all' },
+        { shape: 4, color: 4, quantity: 12, bonus: true, tradeOff: 'all' }
+      ],
+      answerCardList: []
     }
   },
-  computed() {
-
+  computed: {
+    currentLevelSetting() {
+      return this.levelSetting[parseInt(this.level)]
+    },
+    isBonus() {
+      return this.currentLevelSetting.bonus
+    }
   },
-  methods() {
-
+  methods: {
+    setAnswerOfLevel() {
+      const cardGroup = this.setCardGroup(currentLevelSetting)
+      const answerCardGroup = this.setAnswerCardGroup(cardGroup, currentLevelSetting)
+      this.answerCardList = this.setAnswerCardList(answerCardGroup, currentLevelSetting)
+      this.setAnswerCardListWhichBehindTheCards()
+    },
+    // setAnswerCardListWhichBehindTheCards() {
+    //   this.DOMListOfCard.forEach((card, index) => {
+    //     if (card.classList.value.indexOf('disappear') == -1) {
+    //       const backgroundImage = this.answerCardList[index]
+    //       card.children[1].style.backgroundImage = `url(/img/cards-back/${backgroundImage})`
+    //       const borderColor = backgroundImage.slice(
+    //         backgroundImage.indexOf('-') + 1, backgroundImage.indexOf('.svg'))
+    //       card.children[1].classList.add(`border-color-${borderColor}`)
+    //       this.colorListOfAnswerCardList[index] = borderColor
+    //     }
+    //   })
+    // },
+    setCardGroup({ color, shape }) {
+      const colorList = this.getMaterialList(this.cardSetting.colors, color)
+      const shapeList = this.getMaterialList(this.cardSetting.shapes, shape)
+      let tempCardGroup = []
+      colorList.forEach(colorItem =>
+        shapeList.forEach(shapeItem =>
+          tempCardGroup.push(`${shapeItem}-${colorItem}.svg`)
+        )
+      )
+      return tempCardGroup
+    },
+    setAnswerCardGroup(cardGroup, { pairs }) {
+      const sequence = this.getShuffleArray(cardGroup.length, pairs)
+      return sequence.map(order => cardGroup[order])
+    },
+    setAnswerCardList(answerCardGroup, { pairs }) {
+      const lengthOfCardList = pairs * 2
+      const tempAnswerCardGroup = this.getFilledArray(lengthOfCardList, answerCardGroup)
+      const sequence = this.getShuffleArray(lengthOfCardList, lengthOfCardList)
+      return sequence.map(order=> tempAnswerCardGroup[order])
+    },
+    getFilledArray(totalNumber, FilledArray) {
+      return [...Array(totalNumber)].map((item, index) => FilledArray[index % FilledArray.length])
+    },
+    getMaterialList(data, count) {
+      let sequenceArray = this.getShuffleArray(4, count)
+      return sequenceArray.map(order => data[order])
+    },
+    getShuffleArray(totalNumber, count) {
+      return [...Array(totalNumber).keys()]
+        .sort(() => 0.5 - Math.random())
+        .slice(0, count)
+    }
   }
 })
-// (() => {
-//   class Game {
-//   constructor() {
-//     this.cards = {
-//       colors: [ 'blue', 'green', 'pink', 'yellow' ],
-//       shapes: [ 'diamond', 'oval', 'rectangle', 'triangle' ]
-//     }
-//     this.level = 0
-//     this.score = 0
-//     this.isStopSetTimeout = false
-//     this.answerCardList = []
-//     this.currentPair = null
-//     this.colorListOfAnswerCardList = []
-//     this.levelSetting = [
-//       { shape: 2, color: 1, pairs: 4, bonus: false, tradeOff: null },
-//       { shape: 1, color: 2, pairs: 4, bonus: false, tradeOff: null },
-//       { shape: 3, color: 2, pairs: 6, bonus: true, tradeOff: 'shape' },
-//       { shape: 2, color: 3, pairs: 6, bonus: true, tradeOff: 'color' },
-//       { shape: 4, color: 4, pairs: 6, bonus: true, tradeOff: 'all' },
-//       { shape: 4, color: 4, pairs: 6, bonus: true, tradeOff: 'all' }
-//     ]
 //   }
-//   get DOMListOfCard() {
-//     return document.querySelectorAll('.card-item')
-//   }
-//   get isBonus() {
-//     return !(this.level < 3)
-//   }
-//   // isBeforeVerification() {
-//   //   return this.getSelectedDOMListOfCard().length % 2 == 0
-//   // }
 //   getSelectedDOMListOfCard() {
 //     return document.querySelectorAll('.selected')
 //   }
