@@ -69,6 +69,7 @@ html, body {
   display: -ms-flexbox;
   display: flex;
   background-color: #f7f7f7;
+  position: relative;
 }
 
 .game-box {
@@ -119,6 +120,7 @@ html, body {
 
 .game-box .playground .card-font {
   background-image: url("/img/cards-front.png");
+  font-size: 10px;
 }
 
 .game-box .playground .card-back {
@@ -155,6 +157,64 @@ html, body {
   cursor: pointer;
 }
 
-.disappear {
-  display: none;
+.game-box .alert-box {
+  width: 450px;
+  height: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  background-color: #393e46;
+  color: #f7f7f7;
+  border-radius: 5px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 20px 30px;
+  letter-spacing: 1px;
+}
+
+.game-box .alert-icon {
+  font-size: 30px;
+}
+
+.game-box .alert-message {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 26px;
+}
+
+.game-box .alert-options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  position: absolute;
+  right: 15px;
+  bottom: 20px;
+  margin: auto 10px;
+}
+
+.game-box .alert-options > div {
+  width: 60px;
+  height: 30px;
+  border: 1px solid #f7f7f7;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.game-box .alert-options > div:not(last-child) {
+  margin-right: 15px;
 }
