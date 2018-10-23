@@ -8,34 +8,33 @@
   <link rel="stylesheet" type="text/css" media="screen" href="./dist/style/main.min.css" />
 </head>
 <body>
-  <div id="app" class="game-box" @mousemove="detectUserStatus">
-    <div class="info-box">
-      <div class="title">Memory Game</div>
-      <div class="level">level 0{{level}}</div>
-      <div class="score">score {{score}}</div>
-    </div>
-    <div class="playground">
-      <ul class="card-box">
-        <li class="card-item"
-            v-for="(card, index) in answerCardList"
-            :class="{ selected: card.isSelected }">
-          <div class="card-font" @click="pickCardUp(index)"></div>
-          <div v-if="isPlayingMode"
-               class="card-back"
-               :style="{ backgroundImage: `url('/img/cards-back/${card.url}')`}"></div>
-        </li>
-      </ul>
-    </div>
-    <div class="activated-btn"
-         @click="activatedGame">{{isPlayingMode ? 'Stop' : 'Start'}}</div>
-    <div class="alert-box"
-         v-if="!userStatus">
-      <div class="alert-icon">❗</div>
-      <div class="alert-message">Oops!<br >We found you weren't here, and we paused the game.</div>
-      <div class="alert-options">
-        <div class="back">Play</div>
-        <div class="reset">Reset</div>
+  <div id="app">
+    <div class="game-box">
+      <div class="info-box">
+        <div class="title">Memory Game</div>
+        <div class="level">level 0{{level}}</div>
+        <div class="score">score {{score}}</div>
       </div>
+      <div class="playground">
+        <ul class="card-box">
+          <li class="card-item"
+              v-for="(card, index) in answerCardList"
+              :class="{ selected: card.isSelected }">
+            <div class="card-font" @click="pickCardUp(index)"></div>
+            <div v-if="isPlayingMode"
+                class="card-back"
+                :style="{ backgroundImage: `url('/img/cards-back/${card.url}')`}"></div>
+          </li>
+        </ul>
+      </div>
+      <div class="activated-btn"
+           @click="startGame"
+           v-if="!isStartGame">Start</div>
+    </div>
+    <div v-if="isUserInactive"
+         class="alert-box"
+         :class="{ paused: isUserInactive }">
+      <div class="alert-icon"></div>
     </div>
   </div>
 </body>

@@ -65,23 +65,31 @@ html, body {
   height: 100%;
   padding: 0;
   margin: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  background-color: #f7f7f7;
+  background-color: #ffffff;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
   position: relative;
+  overflow: hidden;
 }
 
 .game-box {
-  width: auto;
-  height: auto;
-  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
 }
 
 .game-box .info-box {
   font-family: "Raleway", sans-serif;
   color: #3a3f47;
-  margin-left: 30px;
+  margin: auto;
+  text-align: center;
 }
 
 .game-box .info-box .title {
@@ -108,7 +116,7 @@ html, body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin: 40px auto;
+  margin: 20px auto 40px;
 }
 
 .game-box .playground .card-item {
@@ -124,7 +132,7 @@ html, body {
 }
 
 .game-box .playground .card-back {
-  background-color: #f8f8f8;
+  background-color: white;
   background-size: 45%;
   background-position: 50%;
   background-repeat: no-repeat;
@@ -152,69 +160,77 @@ html, body {
   text-transform: uppercase;
   text-align: center;
   letter-spacing: 2px;
-  border-radius: 20px;
   border: 1px solid #67707e;
+  border-radius: 20px;
   cursor: pointer;
 }
 
-.game-box .alert-box {
-  width: 450px;
-  height: 200px;
+.alert-box {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  rig: 0;
+  background-color: rgba(57, 62, 70, 0.4);
+  cursor: pointer;
+}
+
+.alert-icon {
+  width: 150px;
+  height: 150px;
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
+  -webkit-transform: translate(-50%, calc(-50% + 10px));
+          transform: translate(-50%, calc(-50% + 10px));
+  border-radius: 50%;
   background-color: #393e46;
-  color: #f7f7f7;
+  -webkit-box-shadow: 0 -2px 40px 8px rgba(255, 255, 255, 0.8);
+          box-shadow: 0 -2px 40px 8px rgba(255, 255, 255, 0.8);
+}
+
+.alert-icon::before, .alert-icon::after {
+  content: '';
+  width: 10px;
+  height: 50px;
+  background-color: #ffffff;
   border-radius: 5px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 20px 30px;
-  letter-spacing: 1px;
+  -webkit-transition: .5s;
+  transition: .5s;
 }
 
-.game-box .alert-icon {
-  font-size: 30px;
-}
-
-.game-box .alert-message {
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 26px;
-}
-
-.game-box .alert-options {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+.alert-icon::before {
   position: absolute;
-  right: 15px;
-  bottom: 20px;
-  margin: auto 10px;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(calc(-50% - 15px), -50%);
+          transform: translate(calc(-50% - 15px), -50%);
 }
 
-.game-box .alert-options > div {
-  width: 60px;
-  height: 30px;
-  border: 1px solid #f7f7f7;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 300;
-  text-align: center;
+.alert-icon::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(calc(-50% + 15px), -50%);
+          transform: translate(calc(-50% + 15px), -50%);
 }
 
-.game-box .alert-options > div:not(last-child) {
-  margin-right: 15px;
+.alert-box.paused .alert-icon::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(calc(-50% + 5px), -50%);
+          transform: translate(calc(-50% + 5px), -50%);
+  width: 0;
+  height: 0;
+  border-top: 25px solid transparent;
+  border-left: 40px solid #ffffff;
+  border-bottom: 25px solid transparent;
+  background-color: transparent;
+}
+
+.alert-box.paused .alert-icon::after {
+  width: 0;
+  height: 0;
+  display: none;
 }

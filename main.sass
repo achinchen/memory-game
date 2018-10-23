@@ -5,7 +5,13 @@
   width: $w
   height: $h
 
-$background-color: #f7f7f7
+=absoluteCenter($translateX: -50%, $translateY: -50%)
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate($translateX, $translateY)
+
+$background-color: #ffffff
 $background-reverse-color: #393e46
 $box-shadow: 2px 2px 15px rgba($background-reverse-color,.5)
 
@@ -42,26 +48,31 @@ html, body
   +size(100%)
   padding: 0
   margin: 0
-  display: flex
   background-color: $background-color
+  
+#app
+  +size(100%)
   position: relative
-  
+  overflow: hidden
+
 .game-box
-  +size(auto, auto)
-  margin: auto
-  
+  +absoluteCenter
+  +size(500px)
+    
   .info-box
     font-family: "Raleway", sans-serif
     color: lighten($background-reverse-color,.5)
-    margin-left: 30px
-
+    margin: auto
+    text-align: center
     .title
-      font-size: 40px
-      font-weight: 400
+      font:
+        size: 40px
+        weight: 400
       margin-bottom: 10px
     .score, .level
-      font-size: 20px
-      font-weight: 300
+      font:
+        size: 20px
+        weight: 300
 
   .playground
     .card
@@ -70,7 +81,7 @@ html, body
         display: flex
         flex-flow: row wrap
         justify-content: center
-        margin: 40px auto
+        margin: 20px auto 40px
 
       &-item
         @extend %card-size
@@ -100,7 +111,7 @@ html, body
           transform: rotateY(180deg)
         .card-back
           transform: rotateY(0deg)
-  
+
   .activated-btn
     +size(100px,auto)
     padding: 3px 10px
@@ -112,51 +123,45 @@ html, body
       transform: uppercase
       align: center
     letter-spacing: 2px
-    border-radius: 20px
     border: 1px solid lighten($background-reverse-color,20%)
+    border-radius: 20px
     cursor: pointer
 
-  .alert
-    &-box
-      +size(450px, 200px)
-      position: absolute
-      top: 50%
-      left: 50%
-      transform: translate(-50%, -50%)
-      display: flex
-      flex-flow: column nowrap
-      background-color: $background-reverse-color
-      color: $background-color
+.alert
+  &-box
+    +size(100%, 100vh)
+    position: absolute
+    top: 0
+    rig: 0
+    background-color: rgba($background-reverse-color, .4)
+    cursor: pointer
+  &-icon
+    +size(150px)
+    +absoluteCenter(-50%, calc(-50% + 10px))
+    border-radius: 50%
+    background-color: $background-reverse-color
+    box-shadow: 0 -2px 40px 8px rgba($background-color,.8)
+    &::before, &::after
+      content: ''
+      +size(10px, 50px)
+      background-color: $background-color
       border-radius: 5px
-      box-sizing: border-box
-      padding: 20px 30px
-      letter-spacing: 1px
+      transition: .5s
+    &::before
+      +absoluteCenter(calc(-50% - 15px), -50%)
+    &::after
+      +absoluteCenter(calc(-50% + 15px), -50%)
 
-    &-icon
-      font-size: 30px
-
-    &-message
-      font:
-        size: 14px
-        weight: 300
-      line-height: 26px
-
-    &-options
-      display: flex
-      flex-direction: row
-      position: absolute
-      right: 15px
-      bottom: 20px
-      margin: auto 10px
-
-      > div
-        +size(60px, 30px)
-        border: 1px solid $background-color
-        border-radius: 4px
-        font:
-          size: 14px
-          weight: 300
-        text-align: center
-        
-        &:not(last-child)
-          margin-right: 15px
+  &-box.paused
+    .alert-icon
+      &::before
+        +absoluteCenter(calc(-50% + 5px), -50%)
+        +size(0)
+        border:
+          top: 25px solid transparent
+          left: 40px solid $background-color
+          bottom: 25px solid transparent
+        background-color: transparent      
+      &::after
+        +size(0)
+        display: none

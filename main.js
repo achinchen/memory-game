@@ -6,9 +6,10 @@ new Vue({
       score: 0,
       flopTimes: 0,
       detectorID: null,
-      userStatus: false,
-      isFinishedGame: false,
+      isUserInactive: false,
       isPlayingMode: false,
+      isFinishedGame: false,
+      isStartGame: false,
       cardSetting: {
         colors: [ 'blue', 'green', 'pink', 'yellow' ],
         shapes: [ 'diamond', 'oval', 'rectangle', 'triangle' ]
@@ -26,7 +27,7 @@ new Vue({
     }
   },
   mounted() {
-
+    this.detectUserStatus()
   },
   computed: {
     currentLevelSetting() {
@@ -41,21 +42,42 @@ new Vue({
     }
   },
   methods: {
-    detectUserStatus(evt) {
-      if(!this.userStatus) {
-        clearInterval(this.detectorID)
-      }
-    },
-    activatedGame() {
-      if(this.isPlayingMode) {
-        this.stopGame()
+    startGame() {
+      if(this.level == 6 ) {
+        this.level = 0
+        this.isFinishedGame = true
+        console.log(`finish game, your score is ${this.score}`)
       } else {
-        this.startGame()
+        this.isStartGame = true
+        this.level += 1
+        this.setAnswerOfLevel()
+        setTimeout(() => this.answerCardList.forEach(card => card.isSelected = true), 10)
+        setTimeout(() => {
+          this.answerCardList.forEach(card => card.isSelected = false)
+          this.isPlayingMode = true
+          this.setDetectorForSelectedClass()
+        }, 1000)
       }
-      this.userStatus = true
     },
     stopGame() {
       this.isPlayingMode = false
+    },
+    detectUserStatus() {
+      let detectorOfUserActivities = null
+      const userActivities = [ 'onclick', 'onmousemove', 'onmousedown', 'ontouchstart' ]
+      const resetTimer = (activity) => {
+        clearTimeout(detectorOfUserActivities)
+        if(this.isPlayingMode) {
+          detectorOfUserActivities = setTimeout(() => {
+            this.isUserInactive = true
+            this.isPlayingMode = false
+            clearInterval(this.detectorID)
+            console.log(activity)
+          },1000)
+        }
+      }
+      userActivities.forEach(activity => window[activity] = resetTimer(activity))
+
     },
     checkFoundPairs() {
       if(this.currentLevelSetting.tradeOff) {
@@ -74,20 +96,6 @@ new Vue({
         })
       }
     },
-    startGame() {
-      if(this.level == 6 ) {
-        this.level = 0
-        this.isFinishedGame = true
-        console.log(`finish game, your score is ${this.score}`)
-      } else {
-        this.level += 1
-        this.setAnswerOfLevel()
-      }
-      setTimeout(() => this.answerCardList.forEach(card => card.isSelected = true), 10)
-      setTimeout(() => this.answerCardList.forEach(card => card.isSelected = false), 1000)
-      this.isPlayingMode = true
-      this.setDetectorForSelectedClass()
-    },
     pickCardUp(index) {
       if(this.isPlayingMode) {
         let currentCard = this.answerCardList[index]
@@ -100,20 +108,17 @@ new Vue({
     },
     dropCardBack() {
       this.selectedCards.forEach(card => {
-        if(!card.isFoundPairs) setTimeout(() => card.isSelected = false, 1000)
+        if(!card.isFoundPairs) setTimeout(() => card.isSelected = false, 800)
       })
     },
     switchPlayingMode() {
       clearInterval(this.detectorID)
-      setTimeout(() => this.answerCardList.forEach(card => card.isSelected = false), 2000)
-      setTimeout(() => this.isPlayingMode = false, 1000)
+      setTimeout(() => this.answerCardList.forEach(card => card.isSelected = false), 3000)
+      setTimeout(() => this.stopGame(), 1000)
     },
     setDetectorForSelectedClass() {
       if(this.isPlayingMode) {
-        this.detectorID = setInterval(() => {
-          this.setSelectedClass()
-          console.log(`hello, it's me`)
-        }, 200)
+        this.detectorID = setInterval(() => this.setSelectedClass(), 200)
       }
     },
     setSelectedClass() {
