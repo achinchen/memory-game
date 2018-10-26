@@ -17,25 +17,23 @@
       </div>
       <div class="playground">
         <ul class="card-box">
-          <li class="card-item"
+          <li class="card-back"
               v-for="(card, index) in answerCardList"
-              :class="{ selected: card.isSelected }">
-            <div class="card-font" @click="pickCardUp(index)"></div>
-            <div v-if="isPlayingMode"
-                class="card-back"
-                :style="{ backgroundImage: `url('/img/cards-back/${card.url}')`}"></div>
+              :class="{ selected: card.isSelected}"
+              @click="pickCardUp(index)">
+              <div class="card-font"
+                   :style="{ backgroundImage: `url('/img/cards-back/${card.url}')`}"></div>
           </li>
         </ul>
       </div>
       <div class="activated-btn"
-           @click="startGame"
-           v-if="!isStartGame">Start</div>
+           @click="startGame">Start</div>
     </div>
-    <div v-if="isUserInactive"
+    <!-- <div v-if="isUserInactive"
          class="alert-box"
          :class="{ paused: isUserInactive }">
       <div class="alert-icon"></div>
-    </div>
+    </div> -->
   </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>

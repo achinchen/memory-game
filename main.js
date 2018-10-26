@@ -5,15 +5,12 @@ new Vue({
       level: 0,
       score: 0,
       flopTimes: 0,
-      detectorID: null,
-      isUserInactive: false,
       isPlayingMode: false,
-      isFinishedGame: false,
-      isStartGame: false,
       cardSetting: {
         colors: [ 'blue', 'green', 'pink', 'yellow' ],
         shapes: [ 'diamond', 'oval', 'rectangle', 'triangle' ]
       },
+      currentSelectedCards: [],
       levelSetting: [
         { shape: 2, color: 1, quantity: 8, tradeOff: null },
         { shape: 1, color: 2, quantity: 8, tradeOff: null },
@@ -23,108 +20,63 @@ new Vue({
         { shape: 4, color: 4, quantity: 12, tradeOff: 'all' }
       ],
       answerCardList: [...Array(8)].fill(
-        { url: '', shape: '', card: '',  isSelected: null, isFoundPairs: false })
+        { url: '', shape: '', card: '',  isSelected: false, isFoundPairs: false })
     }
   },
   mounted() {
-    this.detectUserStatus()
+    // this.detectUserStatus()
   },
   computed: {
     currentLevelSetting() {
       return this.levelSetting[parseInt(this.level)]
     },
-    selectedCards() {
-      return this.answerCardList.filter(card => !card.isFoundPairs && card.isSelected)
-    },
-    isFinishedCurrentLevel() {
-      return this.answerCardList.filter(card => card.isFoundPairs).length
-               == this.currentLevelSetting.quantity
-    }
   },
   methods: {
     startGame() {
       if(this.level == 6 ) {
         this.level = 0
-        this.isFinishedGame = true
         console.log(`finish game, your score is ${this.score}`)
       } else {
-        this.isStartGame = true
         this.level += 1
         this.setAnswerOfLevel()
-        setTimeout(() => this.answerCardList.forEach(card => card.isSelected = true), 10)
         setTimeout(() => {
-          this.answerCardList.forEach(card => card.isSelected = false)
-          this.isPlayingMode = true
-          this.setDetectorForSelectedClass()
-        }, 1000)
+          this.answerCardList.forEach(card => card.isSelected = true)
+          setTimeout(() => this.answerCardList.forEach(card => card.isSelected = false), 1500)
+          setTimeout(() => this.isPlayingMode = true, 300)
+        },0)
       }
     },
     stopGame() {
       this.isPlayingMode = false
     },
-    detectUserStatus() {
-      let detectorOfUserActivities = null
-      const userActivities = [ 'onclick', 'onmousemove', 'onmousedown', 'ontouchstart' ]
-      const resetTimer = (activity) => {
-        clearTimeout(detectorOfUserActivities)
-        if(this.isPlayingMode) {
-          detectorOfUserActivities = setTimeout(() => {
-            this.isUserInactive = true
-            this.isPlayingMode = false
-            clearInterval(this.detectorID)
-            console.log(activity)
-          },1000)
-        }
-      }
-      userActivities.forEach(activity => window[activity] = resetTimer(activity))
-
-    },
     checkFoundPairs() {
-      if(this.currentLevelSetting.tradeOff) {
-        let tradeOff = this.currentLevelSetting.tradeOff
-        let basic = tradeOff == 'color' ? 'shape' : 'color'
-        // selectedCards.reduce((previousCard, currentValueCard) => {
-        //   previousCard[basic] == currentValueCard[basic] 
-        // })
-      } else if(this.selectedCards.length == 2){
-        this.selectedCards.reduce((previousCard, currentValueCard) => {
-          if(previousCard.url == currentValueCard.url) {
-            this.score += 1
-            previousCard.isFoundPairs = true
-            currentValueCard.isFoundPairs = true
-          }
+      if (this.currentSelectedCards.length > 1) {
+        this.currentSelectedCard.forEac((previousCard, currentCard) => {
+          // if(previousCard.isFoundPairs){
+          //   currentCard.isSelected = false
+          // } else {
+          //   this.currentLevelSetting.tradeOff ? 
+          // }
+          console.log(previousCard,currentCard)
         })
       }
+      // if (this.currentSelectedCards.length > 1) {
+      //   this.currentSelectedCard
+      // }
+      console.log(this.currentSelectedCards)
     },
     pickCardUp(index) {
       if(this.isPlayingMode) {
         let currentCard = this.answerCardList[index]
         currentCard.isSelected = true
         this.flopTimes += 1
+        this.currentSelectedCards.push(currentCard)
         this.checkFoundPairs()
-        this.dropCardBack()
-        if(this.isFinishedCurrentLevel) this.switchPlayingMode()
+        // if(this.isFinishedCurrentLevel) this.switchPlayingMode()
       }
-    },
-    dropCardBack() {
-      this.selectedCards.forEach(card => {
-        if(!card.isFoundPairs) setTimeout(() => card.isSelected = false, 800)
-      })
     },
     switchPlayingMode() {
-      clearInterval(this.detectorID)
-      setTimeout(() => this.answerCardList.forEach(card => card.isSelected = false), 3000)
-      setTimeout(() => this.stopGame(), 1000)
-    },
-    setDetectorForSelectedClass() {
-      if(this.isPlayingMode) {
-        this.detectorID = setInterval(() => this.setSelectedClass(), 200)
-      }
-    },
-    setSelectedClass() {
-      this.answerCardList.forEach(card => {
-        if(card.isFoundPairs && !card.isSelected) card.isSelected = true
-      })
+      this.stopGame()
     },
     setAnswerOfLevel() {
       const cardGroup = this.setCardGroup(this.currentLevelSetting)

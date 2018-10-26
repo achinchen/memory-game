@@ -1,60 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,300i,400,900");
-.border-color-blue {
-  border: 1px solid #94c5eb;
-}
-
-.bingo-shin-blue {
-  -webkit-box-shadow: 0px 0px 20px 5px rgba(96, 169, 226, 0.6) !important;
-          box-shadow: 0px 0px 20px 5px rgba(96, 169, 226, 0.6) !important;
-}
-
-.border-color-green {
-  border: 1px solid #d3f6be;
-}
-
-.bingo-shin-green {
-  -webkit-box-shadow: 0px 0px 20px 5px rgba(174, 238, 137, 0.6) !important;
-          box-shadow: 0px 0px 20px 5px rgba(174, 238, 137, 0.6) !important;
-}
-
-.border-color-pink {
-  border: 1px solid #fbe3e3;
-}
-
-.bingo-shin-pink {
-  -webkit-box-shadow: 0px 0px 20px 5px rgba(244, 173, 174, 0.6) !important;
-          box-shadow: 0px 0px 20px 5px rgba(244, 173, 174, 0.6) !important;
-}
-
-.border-color-yellow {
-  border: 1px solid #f8f1b4;
-}
-
-.bingo-shin-yellow {
-  -webkit-box-shadow: 0px 0px 20px 5px rgba(243, 231, 124, 0.6) !important;
-          box-shadow: 0px 0px 20px 5px rgba(243, 231, 124, 0.6) !important;
-}
-
-.game-box .playground .card-font, .game-box .playground .card-back {
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-  -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
-  -webkit-transition: .9s;
-  transition: .9s;
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 4px;
-  -webkit-box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
-          box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
-}
-
-.game-box .playground .card-item, .game-box .playground .card-font, .game-box .playground .card-back {
-  width: 100px;
-  height: 150px;
-}
-
 ul {
   list-style: none;
   padding: 0;
@@ -119,35 +63,40 @@ html, body {
   margin: 20px auto 40px;
 }
 
-.game-box .playground .card-item {
+.game-box .playground .card-back {
+  width: 100px;
+  height: 150px;
   position: relative;
   margin: 10px;
-  border: 1px solid transparent;
+  background-image: url("/img/cards-front.png");
+  -webkit-box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
+          box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
+  border-radius: 4px;
   cursor: pointer;
 }
 
+.game-box .playground .card-back.selected {
+  visibility: hidden;
+  -webkit-transition: .8;
+  transition: .8;
+}
+
+.game-box .playground .card-back.selected > div {
+  top: 2px;
+  -webkit-box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
+          box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
+  visibility: visible;
+}
+
 .game-box .playground .card-font {
-  background-image: url("/img/cards-front.png");
-  font-size: 10px;
-}
-
-.game-box .playground .card-back {
-  background-color: white;
+  width: 100%;
+  height: 100%;
   background-size: 45%;
-  background-position: 50%;
+  background-position: center;
   background-repeat: no-repeat;
-  -webkit-transform: rotateY(-180deg);
-          transform: rotateY(-180deg);
-}
-
-.game-box .playground .card-item.selected .card-font {
-  -webkit-transform: rotateY(180deg);
-          transform: rotateY(180deg);
-}
-
-.game-box .playground .card-item.selected .card-back {
-  -webkit-transform: rotateY(0deg);
-          transform: rotateY(0deg);
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  visibility: hidden;
 }
 
 .game-box .activated-btn {
