@@ -12,12 +12,12 @@ new Vue({
       },
       currentSelectedCards: [],
       levelSetting: [
-        { shape: 2, color: 1, quantity: 8, tradeOff: null },
-        { shape: 1, color: 2, quantity: 8, tradeOff: null },
-        { shape: 3, color: 2, quantity: 12, tradeOff: 'shape' },
-        { shape: 2, color: 3, quantity: 12, tradeOff: 'color' },
-        { shape: 4, color: 4, quantity: 12, tradeOff: 'all' },
-        { shape: 4, color: 4, quantity: 12, tradeOff: 'all' }
+        { shape: 2, color: 1, quantity: 8, tradeOff: [], bonus: null },
+        { shape: 1, color: 2, quantity: 8, tradeOff: [], bonus: null },
+        { shape: 3, color: 2, quantity: 12, tradeOff: ['shape'], bonus: 3 },
+        { shape: 2, color: 3, quantity: 12, tradeOff: ['color'], bonus: 3 },
+        { shape: 4, color: 4, quantity: 12, tradeOff: ['shape', 'color'], bonus: 5},
+        { shape: 4, color: 4, quantity: 12, tradeOff: ['shape', 'color'], bonus: 5}
       ],
       answerCardList: [...Array(8)].fill(
         { url: '', shape: '', card: '',  isSelected: false, isFoundPairs: false })
@@ -51,19 +51,49 @@ new Vue({
     },
     checkFoundPairs() {
       if (this.currentSelectedCards.length > 1) {
-        this.currentSelectedCard.forEac((previousCard, currentCard) => {
-          // if(previousCard.isFoundPairs){
-          //   currentCard.isSelected = false
-          // } else {
-          //   this.currentLevelSetting.tradeOff ? 
-          // }
-          console.log(previousCard,currentCard)
-        })
+        this.scoreCalculator()
+        if (this.currentSelectedCards.length == 3) this.currentSelectedCards.length = 0
+      } 
+    },
+    scoreCalculator() {
+      this.basicScoreCalculator()
+      console.log(this.answerCardList.filter(({isFoundPairs}) => isFoundPairs).length)
+      if (this.answerCardList.filter(
+        ({isFoundPairs}) => isFoundPairs).length == this.answerCardList.length) {
+          this.flopsBonusCalculator()
+          this.isPlayingMode = false
+          this.popupDialog = true
+          setTimeout(() => this.startGame(), 3000)
+        }
+    },
+    basicScoreCalculator() {
+      let firstCard = this.currentSelectedCards[0]
+      let secondCard = this.currentSelectedCards[1]
+      let flagOfFoundPairs = false
+      const { tradeOff, bonus } = this.currentLevelSetting
+      const comparisonKeys = Object.keys(this.cardSetting).map(key => key.substring(0,key.length -1))
+      if (firstCard.color == secondCard.color && firstCard.shape == secondCard.shape) {
+        this.score += (bonus + 1)
+        flagOfFoundPairs = true
+      } else {
+        const tradeOffKey = tradeOff.toString()
+        const basicKey = comparisonKeys.filter(key => key != tradeOffKey)
+        if (tradeOff.length == 1 && firstCard[basicKey] == secondCard[basicKey]) {
+          this.score += (bonus + 1)
+          flagOfFoundPairs = true
+        }
       }
-      // if (this.currentSelectedCards.length > 1) {
-      //   this.currentSelectedCard
-      // }
-      console.log(this.currentSelectedCards)
+      this.resultOfDataSetter(flagOfFoundPairs)
+    },
+    resultOfDataSetter(flagOfFoundPairs) {
+      const changedKey = flagOfFoundPairs? 'isFoundPairs' : 'isSelected'
+      // this.currentSelectedCards.forEach((card) => {
+      //   card[changedKey] = flagOfFoundPairs
+      // })
+    },
+    flopsBonusCalculator() {
+      const length = this.answerCardList.length
+      this.score += this.flopTimes == length ? 5 : this.flopTimes < length * 1.5 ? 3 : 1
     },
     pickCardUp(index) {
       if(this.isPlayingMode) {
