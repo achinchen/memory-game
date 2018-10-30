@@ -21,13 +21,18 @@
               v-for="(card, index) in answerCardList"
               :class="{ selected: card.isSelected}"
               @click="pickCardUp(index)">
+              <span>isDisable: {{card.isDisable}} <br > isSelected: {{card.isSelected}} <br > isFoundPairs: {{card.isFoundPairs}}</span>
               <div class="card-font"
                    :style="{ backgroundImage: `url('/img/cards-back/${card.url}')`}"></div>
           </li>
         </ul>
       </div>
-      <div class="activated-btn"
-           @click="startGame">Start</div>
+      <div class="button-box">
+        <div class="button-item"
+             @click="startGame">Start</div>
+        <div class="button-item"
+             @click="resetCurrentGame">Reset</div>
+      </div>
     </div>
   </div>
 </body>

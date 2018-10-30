@@ -10,7 +10,6 @@ new Vue({
         colors: [ 'blue', 'green', 'pink', 'yellow' ],
         shapes: [ 'diamond', 'oval', 'rectangle', 'triangle' ]
       },
-      currentSelectedCards: [],
       levelSetting: [
         { shape: 2, color: 1, quantity: 8, tradeOff: [], bonus: null },
         { shape: 1, color: 2, quantity: 8, tradeOff: [], bonus: null },
@@ -19,17 +18,22 @@ new Vue({
         { shape: 4, color: 4, quantity: 12, tradeOff: ['shape', 'color'], bonus: 5},
         { shape: 4, color: 4, quantity: 12, tradeOff: ['shape', 'color'], bonus: 5}
       ],
+      currentSelectedCards: [],
+      selectedCardList: [],
       answerCardList: [...Array(8)].fill(
-        { url: '', shape: '', card: '',  isSelected: false, isFoundPairs: false })
+        { url: '', shape: '', card: '',  isSelected: false, isFoundPairs: false, isDisable: false })
     }
-  },
-  mounted() {
-    // this.detectUserStatus()
   },
   computed: {
     currentLevelSetting() {
       return this.levelSetting[parseInt(this.level)]
     },
+    foundPairsQuantity() {
+      return this.answerCardList.filter(({isFoundPairs}) => isFoundPairs).length
+    },
+    isFinishCurrentLevel() {
+      return this.foundPairsQuantity == this.answerCardList.length
+    }
   },
   methods: {
     startGame() {
@@ -43,8 +47,12 @@ new Vue({
           this.answerCardList.forEach(card => card.isSelected = true)
           setTimeout(() => this.answerCardList.forEach(card => card.isSelected = false), 1500)
           setTimeout(() => this.isPlayingMode = true, 300)
-        },0)
+        }, 0)
       }
+    },
+    resetCurrentGame() {
+      this.level -= 1
+      this.startGame()
     },
     stopGame() {
       this.isPlayingMode = false
@@ -52,21 +60,16 @@ new Vue({
     checkFoundPairs() {
       if (this.currentSelectedCards.length > 1) {
         this.scoreCalculator()
-        if (this.currentSelectedCards.length == 3) this.currentSelectedCards.length = 0
-      } 
+        setTimeout(() => this.currentSelectedCards = [], 500)
+      }
+    },
+    levelCalculator() {
+      console.log('hello')
+      this.isPlayingMode = false
+      setTimeout(() => this.flopsBonusCalculator(), 1000)
+      setTimeout(() => this.startGame(), 5000)
     },
     scoreCalculator() {
-      this.basicScoreCalculator()
-      console.log(this.answerCardList.filter(({isFoundPairs}) => isFoundPairs).length)
-      if (this.answerCardList.filter(
-        ({isFoundPairs}) => isFoundPairs).length == this.answerCardList.length) {
-          this.flopsBonusCalculator()
-          this.isPlayingMode = false
-          this.popupDialog = true
-          setTimeout(() => this.startGame(), 3000)
-        }
-    },
-    basicScoreCalculator() {
       let firstCard = this.currentSelectedCards[0]
       let secondCard = this.currentSelectedCards[1]
       let flagOfFoundPairs = false
@@ -86,24 +89,41 @@ new Vue({
       this.resultOfDataSetter(flagOfFoundPairs)
     },
     resultOfDataSetter(flagOfFoundPairs) {
-      const changedKey = flagOfFoundPairs? 'isFoundPairs' : 'isSelected'
-      // this.currentSelectedCards.forEach((card) => {
-      //   card[changedKey] = flagOfFoundPairs
-      // })
+      const changedKey = flagOfFoundPairs ? 'isFoundPairs' : 'isSelected'
+      this.currentSelectedCards.forEach(({index}) => {
+        setTimeout(() => this.answerCardList[index][changedKey] = flagOfFoundPairs, flagOfFoundPairs ? 0 : 300)
+        let {isFoundPairs, isSelected} = this.answerCardList[index]
+        console.log({isSelected, isFoundPairs})
+      })
+      this.resetCurrentSelectedCards()
+      if (this.isFinishCurrentLevel) this.levelCalculator()
     },
     flopsBonusCalculator() {
       const length = this.answerCardList.length
       this.score += this.flopTimes == length ? 5 : this.flopTimes < length * 1.5 ? 3 : 1
+      this.flopTimes = 0
     },
     pickCardUp(index) {
       if(this.isPlayingMode) {
+        this.preventMultiplyClick(index)
         let currentCard = this.answerCardList[index]
-        currentCard.isSelected = true
-        this.flopTimes += 1
-        this.currentSelectedCards.push(currentCard)
-        this.checkFoundPairs()
-        // if(this.isFinishedCurrentLevel) this.switchPlayingMode()
+        const { isDisable, isSelected, isFoundPairs } = currentCard
+        if (isDisable && !( isSelected || isFoundPairs)) {
+          this.flopTimes += 1
+          currentCard.isSelected = true
+          this.currentSelectedCards.push({...currentCard, index})
+          this.checkFoundPairs()
+        }
       }
+    },
+    preventMultiplyClick(index) {
+      this.answerCardList[index].isDisable = true
+      setTimeout(() => this.answerCardList[index].isDisable = false, 1000)
+    },
+    resetCurrentSelectedCards() {
+      this.selectedCardList.forEach(({isSelected, isFoundPairs}) => {
+        if (!isFoundPairs) isSelected = false
+      })
     },
     switchPlayingMode() {
       this.stopGame()
@@ -124,7 +144,8 @@ new Vue({
             shape: shapeItem,
             color: colorItem,
             isSelected: false,
-            isFoundPairs: false
+            isFoundPairs: false,
+            isDisable: false
           })
         )
       )

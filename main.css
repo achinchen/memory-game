@@ -73,6 +73,7 @@ html, body {
           box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
   border-radius: 4px;
   cursor: pointer;
+  font-size: 10px;
 }
 
 .game-box .playground .card-back.selected {
@@ -81,11 +82,16 @@ html, body {
   transition: .8;
 }
 
-.game-box .playground .card-back.selected > div {
+.game-box .playground .card-back.selected > .card-font {
   top: 2px;
   -webkit-box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
           box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
   visibility: visible;
+}
+
+.game-box .playground .card-back.selected span {
+  visibility: visible;
+  position: absolute;
 }
 
 .game-box .playground .card-font {
@@ -99,87 +105,35 @@ html, body {
   visibility: hidden;
 }
 
-.game-box .activated-btn {
-  width: 100px;
+.game-box .button-box {
+  width: 400px;
   height: auto;
-  padding: 3px 10px;
   margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row norwrap;
+          flex-flow: row norwrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.game-box .button-item {
+  width: 150px;
+  height: auto;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: auto 40px;
   font-size: 15px;
   font-family: "Raleway", sans-serif;
   text-transform: uppercase;
   text-align: center;
   letter-spacing: 2px;
+  line-height: 23px;
   border: 1px solid #67707e;
   border-radius: 20px;
   cursor: pointer;
-}
-
-.alert-box {
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  rig: 0;
-  background-color: rgba(57, 62, 70, 0.4);
-  cursor: pointer;
-}
-
-.alert-icon {
-  width: 150px;
-  height: 150px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, calc(-50% + 10px));
-          transform: translate(-50%, calc(-50% + 10px));
-  border-radius: 50%;
-  background-color: #393e46;
-  -webkit-box-shadow: 0 -2px 40px 8px rgba(255, 255, 255, 0.8);
-          box-shadow: 0 -2px 40px 8px rgba(255, 255, 255, 0.8);
-}
-
-.alert-icon::before, .alert-icon::after {
-  content: '';
-  width: 10px;
-  height: 50px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  -webkit-transition: .5s;
-  transition: .5s;
-}
-
-.alert-icon::before {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(calc(-50% - 15px), -50%);
-          transform: translate(calc(-50% - 15px), -50%);
-}
-
-.alert-icon::after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(calc(-50% + 15px), -50%);
-          transform: translate(calc(-50% + 15px), -50%);
-}
-
-.alert-box.paused .alert-icon::before {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(calc(-50% + 5px), -50%);
-          transform: translate(calc(-50% + 5px), -50%);
-  width: 0;
-  height: 0;
-  border-top: 25px solid transparent;
-  border-left: 40px solid #ffffff;
-  border-bottom: 25px solid transparent;
-  background-color: transparent;
-}
-
-.alert-box.paused .alert-icon::after {
-  width: 0;
-  height: 0;
-  display: none;
 }
