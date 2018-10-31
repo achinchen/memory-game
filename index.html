@@ -13,7 +13,7 @@
       <div class="info-box">
         <div class="title">Memory Game</div>
         <div class="level">level 0{{level}}</div>
-        <div class="score">score {{score}}</div>
+        <div class="score">score {{displayScore}}</div>
       </div>
       <div class="playground">
         <ul class="card-box">
@@ -21,7 +21,7 @@
               v-for="(card, index) in answerCardList"
               :class="{ selected: card.isSelected}"
               @click="pickCardUp(index)">
-              <span>isDisable: {{card.isDisable}} <br > isSelected: {{card.isSelected}} <br > isFoundPairs: {{card.isFoundPairs}}</span>
+              <!-- <span>isEnabled: {{card.isEnabled}} <br > isSelected: {{card.isSelected}} <br > isFoundPairs: {{card.isFoundPairs}}</span> -->
               <div class="card-font"
                    :style="{ backgroundImage: `url('/img/cards-back/${card.url}')`}"></div>
           </li>

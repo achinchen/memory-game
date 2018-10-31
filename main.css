@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,300i,400,900");
+@import url("https://fonts.googleapis.com/css?family=Amaranth:400,400i,700,700i");
 ul {
   list-style: none;
   padding: 0;
@@ -25,30 +25,30 @@ html, body {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: auto;
 }
 
 .game-box .info-box {
-  font-family: "Raleway", sans-serif;
-  color: #3a3f47;
-  margin: auto;
+  font-family: "Amaranth", sans-serif;
+  color: #444a54;
   text-align: center;
 }
 
 .game-box .info-box .title {
-  font-size: 40px;
-  font-weight: 400;
-  margin-bottom: 10px;
+  font-size: 50px;
+  margin-bottom: 20px;
 }
 
 .game-box .info-box .score, .game-box .info-box .level {
   font-size: 20px;
-  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #67707e;
 }
 
 .game-box .playground .card-box {
-  width: 520px;
+  width: 500px;
   height: auto;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -60,7 +60,7 @@ html, body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin: 20px auto 40px;
+  margin: 20px auto 30px;
 }
 
 .game-box .playground .card-back {
@@ -108,32 +108,42 @@ html, body {
 .game-box .button-box {
   width: 400px;
   height: auto;
-  margin: auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-flow: row norwrap;
-          flex-flow: row norwrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin: auto;
 }
 
 .game-box .button-item {
   width: 150px;
   height: auto;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  margin: auto 40px;
+  font-family: "Amaranth", sans-serif;
   font-size: 15px;
-  font-family: "Raleway", sans-serif;
   text-transform: uppercase;
   text-align: center;
-  letter-spacing: 2px;
-  line-height: 23px;
+  letter-spacing: 5px;
+  line-height: 28px;
+  color: rgba(57, 62, 70, 0.9);
   border: 1px solid #67707e;
   border-radius: 20px;
   cursor: pointer;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+
+.game-box .button-item:hover {
+  color: #ffffff;
+  background-color: rgba(57, 62, 70, 0.5);
+}
+
+.game-box .button-item:active {
+  background-color: rgba(57, 62, 70, 0.9);
+  -webkit-box-shadow: 5px 5px 30px rgba(57, 62, 70, 0.5);
+          box-shadow: 5px 5px 30px rgba(57, 62, 70, 0.5);
 }
