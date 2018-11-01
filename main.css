@@ -147,3 +147,45 @@ html, body {
   -webkit-box-shadow: 5px 5px 30px rgba(57, 62, 70, 0.5);
           box-shadow: 5px 5px 30px rgba(57, 62, 70, 0.5);
 }
+
+.notification {
+  position: absolute;
+  top: 100px;
+  right: -21px;
+  font-family: "Amaranth", sans-serif;
+  font-size: 20px;
+  letter-spacing: 4px;
+  opacity: 0;
+  color: #ddab3e;
+  -webkit-animation: notifyIn 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+          animation: notifyIn 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+}
+
+.notification:before {
+  content: '+';
+  font-size: 24px;
+  position: relative;
+  top: 1px;
+}
+
+@-webkit-keyframes notifyIn {
+  0% {
+    top: 100px;
+    opacity: 1;
+  }
+  100% {
+    top: 20px;
+    opacity: 0;
+  }
+}
+
+@keyframes notifyIn {
+  0% {
+    top: 100px;
+    opacity: 1;
+  }
+  100% {
+    top: 20px;
+    opacity: 0;
+  }
+}
