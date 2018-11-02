@@ -9,6 +9,14 @@
 </head>
 <body>
   <div id="app">
+    <!-- <div class="congratulations-box">
+      <div class="congratulations-content">
+          <div class="title">Congratulations on clearance!</div>
+          <div class="score">your score : {{displayScore}}</div>
+          <div class="button-item"
+               @click="replayGame">Replay</div>
+      </div>
+    </div> -->
     <div class="game-box">
       <div class="info-box">
         <div class="title">Memory Game</div>
@@ -31,7 +39,7 @@
         <div class="button-item"
              @click="startGame">Start</div>
         <div class="button-item"
-             @click="resetCurrentGame">Reset</div>
+             @click="replayGame">Reset</div>
       </div>
       <div class="notification"
            v-for="notification in notifications">{{notification}}</div>

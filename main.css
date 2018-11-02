@@ -5,8 +5,8 @@ ul {
 }
 
 html, body {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   padding: 0;
   margin: 0;
   background-color: #ffffff;
@@ -29,22 +29,29 @@ html, body {
   height: auto;
 }
 
+@media (max-width: 600px) {
+  .game-box {
+    width: 100vw;
+    height: auto;
+  }
+}
+
 .game-box .info-box {
   font-family: "Amaranth", sans-serif;
-  color: #444a54;
+  color: #43424e;
   text-align: center;
 }
 
 .game-box .info-box .title {
-  font-size: 50px;
-  margin-bottom: 20px;
+  font-size: 32px;
+  margin-bottom: 1vh;
 }
 
 .game-box .info-box .score, .game-box .info-box .level {
   font-size: 20px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #67707e;
+  color: #676577;
 }
 
 .game-box .playground .card-box {
@@ -61,6 +68,16 @@ html, body {
       -ms-flex-pack: center;
           justify-content: center;
   margin: 20px auto 30px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .game-box .playground .card-box {
+    width: 80vw;
+    height: auto;
+    margin: 10px auto;
+  }
 }
 
 .game-box .playground .card-back {
@@ -69,29 +86,31 @@ html, body {
   position: relative;
   margin: 10px;
   background-image: url("/img/cards-front.png");
-  -webkit-box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
-          box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
+  -webkit-box-shadow: 2px 2px 15px rgba(55, 54, 64, 0.5);
+          box-shadow: 2px 2px 15px rgba(55, 54, 64, 0.5);
   border-radius: 4px;
   cursor: pointer;
-  font-size: 10px;
-}
-
-.game-box .playground .card-back.selected {
-  visibility: hidden;
   -webkit-transition: .8;
   transition: .8;
 }
 
-.game-box .playground .card-back.selected > .card-font {
-  top: 2px;
-  -webkit-box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
-          box-shadow: 2px 2px 15px rgba(57, 62, 70, 0.5);
-  visibility: visible;
+@media (max-width: 600px) {
+  .game-box .playground .card-back {
+    width: 60px;
+    height: 90px;
+    margin: 5px;
+  }
 }
 
-.game-box .playground .card-back.selected span {
+.game-box .playground .card-back.selected {
+  visibility: hidden;
+}
+
+.game-box .playground .card-back.selected > .card-font {
+  top: 2px;
+  -webkit-box-shadow: 2px 2px 15px rgba(55, 54, 64, 0.5);
+          box-shadow: 2px 2px 15px rgba(55, 54, 64, 0.5);
   visibility: visible;
-  position: absolute;
 }
 
 .game-box .playground .card-font {
@@ -105,7 +124,7 @@ html, body {
   visibility: hidden;
 }
 
-.game-box .button-box {
+.button-box {
   width: 400px;
   height: auto;
   display: -webkit-box;
@@ -120,40 +139,59 @@ html, body {
   margin: auto;
 }
 
-.game-box .button-item {
+@media (max-width: 600px) {
+  .button-box {
+    width: 100vw;
+    height: auto;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
+.button-item {
   width: 150px;
   height: auto;
+  font-size: 14px;
   font-family: "Amaranth", sans-serif;
-  font-size: 15px;
   text-transform: uppercase;
   text-align: center;
   letter-spacing: 5px;
   line-height: 28px;
-  color: rgba(57, 62, 70, 0.9);
-  border: 1px solid #67707e;
+  color: rgba(55, 54, 64, 0.9);
+  border: 1px solid #676577;
   border-radius: 20px;
   cursor: pointer;
   -webkit-transition: .3s;
   transition: .3s;
 }
 
-.game-box .button-item:hover {
-  color: #ffffff;
-  background-color: rgba(57, 62, 70, 0.5);
+@media (max-width: 600px) {
+  .button-item {
+    width: 50px;
+    height: auto;
+    letter-spacing: 1px;
+    margin: auto 10px;
+  }
 }
 
-.game-box .button-item:active {
-  background-color: rgba(57, 62, 70, 0.9);
-  -webkit-box-shadow: 5px 5px 30px rgba(57, 62, 70, 0.5);
-          box-shadow: 5px 5px 30px rgba(57, 62, 70, 0.5);
+.button-item:hover {
+  color: #ffffff;
+  background-color: rgba(55, 54, 64, 0.5);
+}
+
+.button-item:active {
+  background-color: rgba(55, 54, 64, 0.9);
+  -webkit-box-shadow: 5px 5px 30px rgba(55, 54, 64, 0.5);
+          box-shadow: 5px 5px 30px rgba(55, 54, 64, 0.5);
 }
 
 .notification {
   position: absolute;
   top: 100px;
-  right: -21px;
+  right: -23px;
   font-family: "Amaranth", sans-serif;
-  font-size: 20px;
+  font-size: font-size(3);
   letter-spacing: 4px;
   opacity: 0;
   color: #ddab3e;
@@ -163,7 +201,7 @@ html, body {
 
 .notification:before {
   content: '+';
-  font-size: 24px;
+  font-size: font-size(4);
   position: relative;
   top: 1px;
 }
@@ -188,4 +226,50 @@ html, body {
     top: 20px;
     opacity: 0;
   }
+}
+
+.congratulations-box {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(55, 54, 64, 0.1);
+  z-index: 1;
+}
+
+.congratulations-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 330px;
+  height: 150px;
+  font-size: font-size(3);
+  font-family: "Amaranth", sans-serif;
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  padding: 20px;
+}
+
+.congratulations-content .score {
+  font-family: "Amaranth", sans-serif;
+  font-size: font-size(2);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 20px;
+}
+
+.congratulations-content .button-item {
+  width: 100px;
+  height: auto;
+  margin: auto;
+  font-size: font-size(1);
+  line-height: 18px;
 }
