@@ -1,27 +1,18 @@
 .notification
+  +font(3)
   position: absolute
   top: 100px
   right: randomNum()
-  font:
-    family: $font-family
-    size: font-size(3)
+  font-family: $font-family
   letter-spacing: 4px
   opacity: 0
   color: $notification-color
   animation: notifyIn 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards
   &:before
-    content: '+'
-    font-size: font-size(4)
+    +font(4)
+    content: "+"
     position: relative
     top: 1px
-
-@keyframes notifyIn
-  0%
-    top: 100px
-    opacity: 1
-  100%
-    top: 20px
-    opacity: 0
 
 .congratulations
   &-box
@@ -33,26 +24,36 @@
     z-index: 1
   &-content
     +position-center
-    +size(330px, 150px)
-    font:
-      size: font-size(3)
-      family: $font-family
+    +size(400px, 200px)
+    +font(3)
+    display: flex
+    flex-flow: column nowrap
+    justify-content: space-around
+    font-family: $font-family
     text-align: center
     background-color: $background-color
-    border-radius: 4px
+    border-radius: 10px
+    box-shadow: 5px 10px 30px 5px rgba($background-reverse-color, .3)
     box-sizing: border-box
-    box-shadow: 0 0 20px rgba($background-color, .5)
-    padding: 20px
+    padding: 30px
+    transition: opacity .5s
+    animation: fadeIn .5s
+    +media
+      +size(80vw, 150px)
+      max-width: 300px
+    .title
+      +font(3)
+      text-shadow: 0 0 2px rgba($background-reverse-color, .1)
+      font-weight: 400
     .score
-      font:
-        family: $font-family
-        size: font-size(2)
+      +font(2)
+      font-family: $font-family
       letter-spacing: 2px
       text-transform: uppercase
-      padding: 20px
     .button-item
       +size(100px,auto)
-      margin: auto
-      font-size: font-size(1)
-      line-height: 18px
-      
+      +font(2)
+      margin: 0
+      align-self: center
+      line-height: 22px
+      letter-spacing: 2px

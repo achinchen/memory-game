@@ -3,8 +3,8 @@
     el: '#app',
     data() {
       return {
-        timer: 500,
-        level: 0,
+        timer: 800,
+        level: 9,
         score: 0,
         flopTimes: 0,
         isPlayingMode: false,
@@ -41,18 +41,22 @@
         return this.foundPairsQuantity == this.answerCardList.length
       },
       isFinishAllLevel() {
-        return this.level == 10
+        return this.level == 10 && this.isFinishCurrentLevel
+      },
+      displayLevel() {
+        return this.level.toString().padStart(3, 0)
       },
       displayScore() {
         return this.score.toString().padStart(3, 0)
+      },
+      displayNameOfButton() {
+        return !this.isPlayingMode ? 'Start' : 'Replay'
       }
     },
     methods: {
-      startGame() {
-        if (this.isFinishAllLevel) {
-          this.stopGame()
-        } else if (!this.isPlayingMode) {
-          this.playGame()
+      triggerGame() {
+        if (!this.isFinishAllLevel) {
+          this.isPlayingMode ? this.replayGame() : this.playGame()
         }
       },
       playGame() {
@@ -62,7 +66,7 @@
           this.answerCardList.forEach(card => card.isSelected = true)
           setTimeout(() => this.answerCardList.forEach(card => card.isSelected = false), this.timer * 4.5)
           setTimeout(() => this.isPlayingMode = true, this.timer - 200)
-        }, 0)
+        }, this.timer - 400)
       },
       stopGame() {
         this.level = 0
@@ -72,7 +76,7 @@
       },
       replayGame() {
         this.stopGame()
-        this.playGame()
+        setTimeout(() => this.playGame(), 500)
       },
       pickCardUp(index) {
         if(this.isPlayingMode) {
@@ -131,8 +135,8 @@
       levelCalculator() {
         this.isPlayingMode = false
         setTimeout(() => this.bonusCalculator(), this.timer * 3)
-        setTimeout(() => this.foldBackCard(), this.timer * 2)
-        setTimeout(() => this.startGame(), this.timer * 10)
+        if(this.isFinishAllLevel) setTimeout(() => this.foldBackCard(), this.timer * 2)
+        setTimeout(() => this.triggerGame(), this.timer * 10)
       },
       bonusCalculator() {
         const length = this.answerCardList.length

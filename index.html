@@ -9,37 +9,36 @@
 </head>
 <body>
   <div id="app">
-    <!-- <div class="congratulations-box">
+    <div class="congratulations-box"
+         v-if="isFinishAllLevel">
       <div class="congratulations-content">
-          <div class="title">Congratulations on clearance!</div>
+          <div class="title">🙌 Congratulations on clearance!</div>
           <div class="score">your score : {{displayScore}}</div>
           <div class="button-item"
-               @click="replayGame">Replay</div>
+               @click="triggerGame">Replay</div>
       </div>
-    </div> -->
+    </div>
     <div class="game-box">
       <div class="info-box">
         <div class="title">Memory Game</div>
-        <div class="level">level  0{{level}}</div>
+        <div class="level">level {{displayLevel}}</div>
         <div class="score">score {{displayScore}}</div>
       </div>
       <div class="playground">
         <ul class="card-box">
-          <li class="card-back"
+          <li class="card-item"
               v-for="(card, index) in answerCardList"
-              :class="{ selected: card.isSelected}"
+              :class="{ selected: card.isSelected }"
               @click="pickCardUp(index)">
-              <!-- <span>isEnabled: {{card.isEnabled}} <br > isSelected: {{card.isSelected}} <br > isFoundPairs: {{card.isFoundPairs}}</span> -->
-              <div class="card-font"
+              <div class="card-font"></div>
+              <div class="card-back"
                    :style="{ backgroundImage: `url('../../src/img/cards-back/${card.url}')`}"></div>
           </li>
         </ul>
       </div>
       <div class="button-box">
         <div class="button-item"
-             @click="startGame">Start</div>
-        <div class="button-item"
-             @click="replayGame">Reset</div>
+             @click="triggerGame">{{displayNameOfButton}}</div>
       </div>
       <div class="notification"
            v-for="notification in notifications">{{notification}}</div>

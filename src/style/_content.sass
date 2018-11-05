@@ -1,12 +1,18 @@
 
+%flipCard
+  +size(100%)
+  position: absolute
+  backface-visibility: hidden
+  transition: .5s
+  border-radius: 4px
+  box-shadow: $box-shadow
+
 ul
   list-style: none
   padding: 0
-
-// content
-
+  
 html, body
-  +size(100vw, 100vh)
+  +size(100%)
   padding: 0
   margin: 0
   background-color: $background-color
@@ -19,7 +25,7 @@ html, body
 .game-box
   +position-center
   +size(600px, auto)
-  +media(phone)
+  +media
     +size(100vw, auto)
     
   .info-box
@@ -27,10 +33,10 @@ html, body
     color: lighten($background-reverse-color,5%)
     text-align: center    
     .title
-      +font-size(5)
+      +font(6)
       margin-bottom: 1vh
     .score, .level
-      +font-size(3)
+      +font(3)
       text-transform: uppercase
       letter-spacing: 2px
       color: lighten($background-reverse-color,20%)
@@ -44,36 +50,39 @@ html, body
         justify-content: center
         margin: 20px auto 30px
         box-sizing: border-box
-        +media(phone)
+        +media
           +size(80vw, auto)
+          max-width: 300px
           margin: 10px auto
 
-      &-back
+      &-item
         +size(100px,150px)
         position: relative
         margin: 10px
-        background-image: url("../../src/img/cards-front.png")
-        box-shadow: $box-shadow
         border-radius: 4px
+        transition: .5s
+        transform-style: preserve-3d
         cursor: pointer
-        transition: .8
-        +media(phone)
+        +media
           +size(60px, 90px)
           margin: 5px
 
         &.selected
-          visibility: hidden
           > .card-font
-            top: 2px
-            box-shadow: $box-shadow
-            visibility: visible
-          
+            transform: rotateY(180deg)
+          > .card-back
+            transform: rotateY(0deg)
+
       &-font
-        +size(100%)
+        @extend %flipCard
+        background-image: url("../../src/img/cards-front.png")
+        
+      &-back
+        @extend %flipCard
         background:
           size: 45%
           position: center
           repeat: no-repeat
         border: 1px solid darken($background-color,20%)
         border-radius: 4px
-        visibility: hidden
+        transform: rotateY(180deg)

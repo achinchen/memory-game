@@ -5,7 +5,7 @@ $background-color: #ffffff
 $background-reverse-color: #373640
 $box-shadow: 2px 2px 15px rgba($background-reverse-color,.5)
 $font-family: 'Amaranth', sans-serif
-$font-size: 10px 14px 20px 24px 32px
+$font-size: 10px 14px 20px 24px 32px 36px
 $query: (phone: 600px, table: 900px, desktop: 1200px)
 
 @function randomNum
@@ -27,12 +27,15 @@ $query: (phone: 600px, table: 900px, desktop: 1200px)
   left: 50%
   transform: translate(-50%, -50%)
 
-=media($device)
-  @media (max-width: mediaQuery($device))
+=media($device:phone)
+  @media screen and (max-width: mediaQuery($device))
     @content
 
-=font-size($index, $device:phone)
+=font($index)
   font-size: fontSize($index)
-  @if $index != 1
-    +media($device)
-      fontSize($index - 1)
+  @if $index > 1
+    +media(table)
+      font-size: fontSize($index - 1)
+  @if $index > 2
+    +media(phone)
+      font-size: fontSize($index - 2)
