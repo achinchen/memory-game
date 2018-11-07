@@ -12,6 +12,12 @@ module.exports = WebpackMerge(BaseConfig, {
     open: true,
     quiet: true,
     port: 8081,
+    proxy: {
+      '*/images/*': {
+        target: 'http://localhost/dist',
+        changeOrigin: true,
+      },
+    },
     stats: { colors: true },
   },
   plugins: [
