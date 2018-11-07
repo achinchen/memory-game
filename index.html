@@ -5,14 +5,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Memory Game</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="dist/main.css">
 </head>
 <body>
   <div id="app">
     <div class="congratulations-box"
          v-if="isFinishAllLevel">
       <div class="congratulations-content">
-          <div class="title">🙌 Congratulations on clearance!</div>
+          <div class="title">🙌 Congratulations on clearance! ✨</div>
           <div class="score">your score : {{displayScore}}</div>
           <div class="button-item"
                @click="triggerGame">Replay</div>
@@ -32,7 +31,7 @@
               @click="pickCardUp(index)">
               <div class="card-font"></div>
               <div class="card-back"
-                   :style="{ backgroundImage: `url(~src/img/cards-back/${card.url})`}"></div>
+                   :style="{ backgroundImage: `url(../images/cards-back/${card.url})`}"></div>
           </li>
         </ul>
       </div>
@@ -45,6 +44,4 @@
     </div>
   </div>
 </body>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js'></script>
-<script src="dist/main.js"></script>
 </html>

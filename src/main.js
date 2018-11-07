@@ -1,10 +1,10 @@
-(function(Vue) {
-  new Vue({
+;(function(Vue) {
+  let vm = new Vue({
     el: '#app',
     data() {
       return {
         timer: 800,
-        level: 9,
+        level: 0,
         score: 0,
         flopTimes: 0,
         isPlayingMode: false,
@@ -31,6 +31,12 @@
       }
     },
     computed: {
+      lessTimer() {
+        return this.timer - 200
+      },
+      moreTimer() {
+        return this.timer * 4
+      },
       currentLevelSetting() {
         return this.levelSetting[parseInt(this.level) - 1]
       },
@@ -40,8 +46,13 @@
       isFinishCurrentLevel() {
         return this.foundPairsQuantity == this.answerCardList.length
       },
-      isFinishAllLevel() {
-        return this.level == 10 && this.isFinishCurrentLevel
+      isFinishAllLevel: {
+        get() {
+          return this.level == 10 && this.isFinishCurrentLevel
+        },
+        set() {
+          this.replayGame()
+        }
       },
       displayLevel() {
         return this.level.toString().padStart(3, 0)
@@ -55,28 +66,29 @@
     },
     methods: {
       triggerGame() {
-        if (!this.isFinishAllLevel) {
-          this.isPlayingMode ? this.replayGame() : this.playGame()
-        }
+        this.isFinishAllLevel || this.isPlayingMode
+          ? this.isFinishAllLevel = false
+          : this.playGame()
       },
       playGame() {
         this.level += 1
         this.setAnswerOfLevel()
         setTimeout(() => {
-          this.answerCardList.forEach(card => card.isSelected = true)
-          setTimeout(() => this.answerCardList.forEach(card => card.isSelected = false), this.timer * 4.5)
-          setTimeout(() => this.isPlayingMode = true, this.timer - 200)
-        }, this.timer - 400)
+          this.foldBackCard(true)
+          setTimeout(() => this.foldBackCard(), this.moreTimer)
+          setTimeout(() => this.isPlayingMode = true, this.lessTimer)
+        }, this.lessTimer)
       },
       stopGame() {
         this.level = 0
         this.flop = 0
         this.score = 0
         this.isPlayingMode = false
+        this.foldBackCard()
       },
       replayGame() {
         this.stopGame()
-        setTimeout(() => this.playGame(), 500)
+        setTimeout(() => this.playGame(), this.timer)
       },
       pickCardUp(index) {
         if(this.isPlayingMode) {
@@ -122,21 +134,23 @@
         const changedKey = flagOfFoundPairs ? 'isFoundPairs' : 'isSelected'
         this.currentSelectedCards.forEach(({index}) => {
           setTimeout(() => this.answerCardList[index][changedKey] = flagOfFoundPairs,
-            flagOfFoundPairs ? 0 : this.timer - 200)
+            flagOfFoundPairs ? 0 : this.lessTimer)
         })
         setTimeout(() => { if(this.isFinishCurrentLevel) this.levelCalculator() }, this.timer)
       },
       selectedCardDetector() {
         this.answerCardList.forEach((card) => { if (!card.isFoundPairs) card.isSelected = false })
       },
-      foldBackCard() {
-        this.answerCardList.forEach((card) => card.isSelected = false)
+      foldBackCard(Selected = false) {
+        this.answerCardList.forEach((card) => card.isSelected = Selected)
       },
       levelCalculator() {
         this.isPlayingMode = false
-        setTimeout(() => this.bonusCalculator(), this.timer * 3)
-        if(this.isFinishAllLevel) setTimeout(() => this.foldBackCard(), this.timer * 2)
-        setTimeout(() => this.triggerGame(), this.timer * 10)
+        setTimeout(() => this.bonusCalculator(), this.lessTimer)
+        if(!this.isFinishAllLevel) {
+          setTimeout(() => this.foldBackCard(), this.moreTimer / 2)
+          setTimeout(() => this.triggerGame(), this.moreTimer)
+        }
       },
       bonusCalculator() {
         const length = this.answerCardList.length
@@ -145,9 +159,9 @@
         this.flopTimes = 0
       },
       notificationsAndScoreSetter(score) {
-        this.score += score
         this.notifications.push(score)
-        setTimeout(() => this.notifications.unshift(), this.timer * 3)
+        this.score += score
+        setTimeout(() => this.notifications.shift(), this.timer)
       },
       setAnswerOfLevel() {
         const cardGroup = this.setCardGroup(this.currentLevelSetting)
