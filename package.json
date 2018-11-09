@@ -4,7 +4,7 @@
   "main": "main.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config config/webpack.dev.config.js",
-    "build": "webpack --progress --config config/webpack.prod.config.js"
+    "build": "NODE_ENV=production webpack --inline --progress --config config/webpack.prod.config.js"
   },
   "repository": {
     "type": "git",

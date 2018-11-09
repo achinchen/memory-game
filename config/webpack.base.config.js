@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-module.exports = {
+let config = {
   entry: [
     './src/main.js',
     './src/style/main.sass'
@@ -39,33 +39,23 @@ module.exports = {
             }
           }
         ]
-      },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader'
-          },
-          {
-            loader:  'webpack-replace-loader',
-            options: {
-              arr: [
-                { search: '@', replace: 'mode', attr: 'g'}
-              ]
-            }
-          }
-        ]
       }
     ]
   },
   plugins: [
+    new webpack.EnvironmentPlugin(['NODE_ENV']),
     new MiniCssExtractPlugin({
       filename: '[name].css'
     }),
     new webpack.LoaderOptionsPlugin({
       options: {
         postcss: [
-          autoprefixer()
+          autoprefixer({
+            'browsers': [
+              'last 2 versions',
+              'ie >= 11'
+            ]
+          })
         ]
       }
     }),
@@ -94,3 +84,23 @@ module.exports = {
     })
   ]
 }
+
+
+config.module.rules.push({
+  test: /\.html$/,
+  use: [
+    {
+      loader: 'html-loader'
+    },
+    {
+      loader:  'webpack-replace-loader',
+      options: {
+        arr: [
+          { search: '@/', replace: process.env.NODE_ENV, attr: 'g'}
+        ]
+      }
+    }
+  ]
+})
+
+module.exports = config
