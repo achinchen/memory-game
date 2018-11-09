@@ -45,6 +45,14 @@ module.exports = {
         use: [
           {
             loader: 'html-loader'
+          },
+          {
+            loader:  'webpack-replace-loader',
+            options: {
+              arr: [
+                { search: '@', replace: 'mode', attr: 'g'}
+              ]
+            }
           }
         ]
       }
