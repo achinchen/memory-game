@@ -1,12 +1,3 @@
-
-%flipCard
-  +size(100%)
-  position: absolute
-  backface-visibility: hidden
-  transition: .5s
-  border-radius: 4px
-  box-shadow: $box-shadow
-
 ul
   list-style: none
   padding: 0
@@ -50,6 +41,9 @@ html, body
         justify-content: center
         margin: 20px auto 30px
         box-sizing: border-box
+        border: 1px solid gray
+        +media(desktop)
+          +size(450px,auto)
         +media
           +size(80vw, auto)
           max-width: 300px
@@ -63,6 +57,8 @@ html, body
         transition: .5s
         transform-style: preserve-3d
         cursor: pointer
+        +media(desktop)
+          +size(80px, 120px)
         +media
           +size(60px, 90px)
           margin: 5px

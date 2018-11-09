@@ -6,7 +6,7 @@ $background-reverse-color: #373640
 $box-shadow: 2px 2px 15px rgba($background-reverse-color,.5)
 $font-family: 'Amaranth', sans-serif
 $font-size: 10px 14px 20px 24px 32px 36px
-$query: (phone: 600px, table: 900px, desktop: 1200px)
+$query: (phone: 600px, table: 900px, desktop: 1200px, wide: 1800px)
 
 @function randomNum
   @return random(30) - 30 + px
@@ -39,3 +39,11 @@ $query: (phone: 600px, table: 900px, desktop: 1200px)
   @if $index > 2
     +media(phone)
       font-size: fontSize($index - 2)
+
+%flipCard
+  +size(100%)
+  position: absolute
+  backface-visibility: hidden
+  transition: .5s
+  border-radius: 4px
+  box-shadow: $box-shadow
