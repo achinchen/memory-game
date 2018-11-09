@@ -7,17 +7,11 @@ module.exports = WebpackMerge(BaseConfig, {
   mode: 'development',
   devtool: 'source-map',
   devServer: {
-    contentBase: path.resolve(__dirname),
+    contentBase: path.resolve(__dirname, 'dist'),
     hot: true,
     open: true,
     quiet: true,
     port: 8081,
-    proxy: {
-      '*/images/*': {
-        target: 'http://localhost/dist',
-        changeOrigin: true,
-      },
-    },
     stats: { colors: true },
   },
   plugins: [

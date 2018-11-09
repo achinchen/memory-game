@@ -1,5 +1,5 @@
 ;(function(Vue) {
-  let vm = new Vue({
+  new Vue({
     el: '#app',
     data() {
       return {
@@ -27,7 +27,7 @@
         notifications: [],
         currentSelectedCards: [],
         answerCardList: [...Array(12)].fill(
-          { url: '', shape: '', card: '',  isSelected: false, isFoundPairs: false, isEnabled: false })
+          { url: 'diamond-blue.svg', shape: '', card: '',  isSelected: false, isFoundPairs: false, isEnabled: false })
       }
     },
     computed: {
