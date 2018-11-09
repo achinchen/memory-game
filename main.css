@@ -1,4 +1,16 @@
 @import url(https://fonts.googleapis.com/css?family=Amaranth:400,400i,700,700i);
+.game-box .playground .card-font, .game-box .playground .card-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transition: .5s;
+  transition: .5s;
+  border-radius: 4px;
+  -webkit-box-shadow: 2px 2px 15px rgba(55, 54, 64, 0.5);
+          box-shadow: 2px 2px 15px rgba(55, 54, 64, 0.5); }
+
 @-webkit-keyframes notifyIn {
   0% {
     top: 100px;
@@ -6,6 +18,7 @@
   100% {
     top: 20px;
     opacity: 0; } }
+
 @keyframes notifyIn {
   0% {
     top: 100px;
@@ -25,18 +38,6 @@
     opacity: 0; }
   100% {
     opacity: 1; } }
-
-.game-box .playground .card-font, .game-box .playground .card-back {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-  -webkit-transition: .5s;
-  transition: .5s;
-  border-radius: 4px;
-  -webkit-box-shadow: 2px 2px 15px rgba(55, 54, 64, 0.5);
-          box-shadow: 2px 2px 15px rgba(55, 54, 64, 0.5); }
 
 ul {
   list-style: none;
@@ -106,7 +107,12 @@ html, body {
             justify-content: center;
     margin: 20px auto 30px;
     -webkit-box-sizing: border-box;
-            box-sizing: border-box; }
+            box-sizing: border-box;
+    border: 1px solid gray; }
+    @media screen and (max-width: 1200px) {
+      .game-box .playground .card-box {
+        width: 450px;
+        height: auto; } }
     @media screen and (max-width: 600px) {
       .game-box .playground .card-box {
         width: 80vw;
@@ -124,6 +130,10 @@ html, body {
     -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
     cursor: pointer; }
+    @media screen and (max-width: 1200px) {
+      .game-box .playground .card-item {
+        width: 80px;
+        height: 120px; } }
     @media screen and (max-width: 600px) {
       .game-box .playground .card-item {
         width: 60px;
@@ -203,7 +213,7 @@ html, body {
   font-size: 20px;
   position: absolute;
   top: 100px;
-  right: -3px;
+  right: -10px;
   font-family: "Amaranth", sans-serif;
   letter-spacing: 4px;
   opacity: 0;
