@@ -5,8 +5,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 module.exports = WebpackMerge(BaseConfig, {
   mode: 'production',
   plugins: [
-    new CleanWebpackPlugin([
-      'dist'
-    ])
+    new CleanWebpackPlugin(['dist'])
   ]
 })

@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const isProduction = process.env.NODE_ENV == 'production'
 
 module.exports = {
   entry: ['./src/main.js', './src/style/main.sass'],
@@ -49,7 +50,7 @@ module.exports = {
               arr: [
                 {
                   search: '@/',
-                  replace: process.env.NODE_ENV == 'production' ? './' : '../',
+                  replace: isProduction ? './' : '../',
                   attr: 'g'
                 }
               ]
@@ -66,11 +67,7 @@ module.exports = {
     }),
     new webpack.LoaderOptionsPlugin({
       options: {
-        postcss: [
-          autoprefixer({
-            browsers: ['last 2 versions', 'ie >= 11']
-          })
-        ]
+        postcss: [autoprefixer()]
       }
     }),
     new CopyWebpackPlugin([
@@ -93,7 +90,7 @@ module.exports = {
         {
           module: 'Vue',
           entry: `https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue${
-            process.env.NODE_ENV == 'production' ? '.min' : ''
+            isProduction ? '.min' : ''
           }.js`
         }
       ]

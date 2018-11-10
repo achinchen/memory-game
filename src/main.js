@@ -4,7 +4,7 @@
     data() {
       return {
         timer: 800,
-        level: 0,
+        level: 9,
         score: 0,
         flopTimes: 0,
         isPlayingMode: false,
@@ -24,7 +24,7 @@
           { shape: 4, color: 4, quantity: 12 },
           { shape: 4, color: 4, quantity: 12 }
         ],
-        notifications: [],
+        notifications: [2],
         currentSelectedCards: [],
         answerCardList: [...Array(12)].fill(
           { url: 'diamond-blue.svg', shape: '', card: '',  isSelected: false, isFoundPairs: false, isEnabled: false })
