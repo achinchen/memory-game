@@ -39,8 +39,10 @@
         <div class="button-item"
              @click="triggerGame">{{displayNameOfButton}}</div>
       </div>
-      <div class="notification"
-           v-for="notification in notifications">{{notification}}</div>
+      <div class="notification-box">
+        <div class="notification-item"
+             v-for="notification in notifications">{{notification}}</div>
+      </div>
     </div>
   </div>
 </body>

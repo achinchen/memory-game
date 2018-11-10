@@ -6,17 +6,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-let config = {
-  entry: [
-    './src/main.js',
-    './src/style/main.sass'
-  ],
+module.exports = {
+  entry: ['./src/main.js', './src/style/main.sass'],
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, '../dist'),
+    path: path.resolve(__dirname, '../dist')
   },
   externals: {
-    'vue': 'Vue' 
+    vue: 'Vue'
   },
   module: {
     rules: [
@@ -35,7 +32,27 @@ let config = {
           {
             loader: 'file-loader',
             options: {
-              name: 'images/[name].[ext]',
+              name: 'images/[name].[ext]'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader'
+          },
+          {
+            loader: 'webpack-replace-loader',
+            options: {
+              arr: [
+                {
+                  search: '@/',
+                  replace: process.env.NODE_ENV == 'production' ? './' : '../',
+                  attr: 'g'
+                }
+              ]
             }
           }
         ]
@@ -51,10 +68,7 @@ let config = {
       options: {
         postcss: [
           autoprefixer({
-            'browsers': [
-              'last 2 versions',
-              'ie >= 11'
-            ]
+            browsers: ['last 2 versions', 'ie >= 11']
           })
         ]
       }
@@ -78,7 +92,9 @@ let config = {
       externals: [
         {
           module: 'Vue',
-          entry: `https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue${process.env.NODE_ENV == 'production' ? '.min' : ''}.js`
+          entry: `https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue${
+            process.env.NODE_ENV == 'production' ? '.min' : ''
+          }.js`
         }
       ]
     })
@@ -86,21 +102,19 @@ let config = {
 }
 
 
-config.module.rules.push({
-  test: /\.html$/,
-  use: [
-    {
-      loader: 'html-loader'
-    },
-    {
-      loader:  'webpack-replace-loader',
-      options: {
-        arr: [
-          { search: '@/', replace: process.env.NODE_ENV, attr: 'g'}
-        ]
-      }
-    }
-  ]
-})
-
-module.exports = config
+// config.module.rules.push({
+//   test: /\.html$/,
+//   use: [
+//     {
+//       loader: 'html-loader'
+//     },
+//     {
+//       loader:  'webpack-replace-loader',
+//       options: {
+//         arr: [
+//           { search: '@/', replace: process.env.NODE_ENV, attr: 'g'}
+//         ]
+//       }
+//     }
+//   ]
+// })
