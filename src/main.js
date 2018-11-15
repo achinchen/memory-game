@@ -24,7 +24,7 @@
           { shape: 4, color: 4, quantity: 12 },
           { shape: 4, color: 4, quantity: 12 }
         ],
-        notifications: [ 2 ],
+        notifications: [],
         currentSelectedCards: [],
         answerCardList: [...Array(12)].fill(
           { url: 'diamond-blue.svg', shape: '', card: '',  isSelected: false, isFoundPairs: false, isEnabled: false })
